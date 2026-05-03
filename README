@@ -1,7 +1,8 @@
-"pub" is a web site dedicated to (current) PUBLICATIONS.
-I'm thinking of throwing homepages and documentations
-in here, so that I don't have to risk having them go out
-while experimenting with my REAL "www" web site.
+"foss" is a web site dedicated to anything free-software
+related.  It used to be named "pub" because FTP, but that
+always felt weird since my brain always thinks it should
+come after the domain, not before.
 
 "docs/" is the web root directory and "docs/CNAME" is
-read by GitHub Pages (since I am deploying from a branch).
+read by GitHub Pages.  I configured it so that GitHub
+deploys from a branch named "gh-pages".
