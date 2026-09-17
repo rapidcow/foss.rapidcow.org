@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="UTF-8">
+	<title>on ai</title>
+	<meta name="description" content="ai policy">
+	<link rel="stylesheet" href="../style.css" type="text/css">
+</html>
+<body>
+	<h1>on ai</h1>
+	<p>[policy for the <a href=".">trivnote</a> project]</p>
+	<p>I think this is sort of a mandatory footnote in the midst of
+	the <a href="https://en.wikipedia.org/wiki/AI_boom">AI boom</a>.
+	On the one hand, practically every one I meet in my university
+	is pro-vibe-coding (they made a whole academy named after AI,
+	can you believe it?)  On the other hand, most FOSS projects (with
+	the prominent exception of the venerable <a href="https://lwn.net/Articles/1076040/">rsync</a>,
+	and <a href="https://github.com/torvalds/linux/commit/818bebeb63dd6bf5f4e07e145f6cdbace520a34c">Linux</a>,
+	to some degree?) have a strong no-AI policy.</p>
+	<p>Personally, I am in a position somewhere in-between&hellip;</p>
+	<ul>
+		<li>I am not a fan of vibe-coding, but&hellip; they are
+			sometimes better than some of the code I’ve seen
+			some of my peers (whom I shall not name) write.
+			(It’s mediocre code, but not horribly <em>bad</em>.)</li>
+		<li>I am not a fan of AI-generated writing either, but
+			I find it to be a good starting point when I feel
+			overwhelmed about all the things I haven’t done.</li>
+		<li>AI tolerates my nerdy rants.  At worst, the provider
+			tells me I have reached my limit; it’s not going
+			to hurt my feelings, the same way my roommates,
+			my classmates have.  (I use AI more as
+			<a href="https://en.wikipedia.org/wiki/Rubber_duck_debugging">rubber-ducking</a>
+			than replace my thought process; it sets a
+			baseline and pushes me to “do better”.)</li>
+		<li>Extreme pro-AI and anti-AI people make me sad,
+			and being around them makes me want to do the
+			exact opposite, just so that they don’t have
+			unrealistic expectations for me to side with
+			them.</li>
+	</ul>
+	<p>So there is a lot of things I do to please people. :(
+	That said, there <em>are</em> a few things that I now do
+	for myself anyways, that hopefully doesn’t change about
+	this project.  For those of you who are on the lookout for
+	“slop code”, I want to get this out of the way that:</p>
+	<ul>
+		<li><b>This project is not AI-free.</b>
+			I have used and will continue to use AI for
+			reverse engineering <code>com.apple.drawing.2</code>
+			and <code>com.apple.pencil</code>, and binary
+			formats consumed exclusively by proprietary
+			software in general.  I will consult AI for
+			design choices, security auditing, and producing
+			regression tests when things get repetitive.
+			And I accept patches from people who have
+			possibly used AI to understand the code base, to
+			help draft a patch, to test some code they just
+			wrote, proofread something&hellip; basically AI
+			involved in the stage of authoring changes and
+			proposals in general.
+			<br>
+			This is a project involves some things that are
+			genuine new to me; and school sure as heck don’t
+			teach me.  I use AI extensively because it is
+			available, not so much I agree with it.  But,
+			if any of this is at odds with your stance of AI,
+			don’t use this software.  But please please please,
+			<b>don’t leave hate</b>.  It hurts my feelings, and
+			I may remove this project from the Internet (or at least
+			hide it the best I can).  Constructive conversations
+			are okay, but I don’t take harsh criticisms well.
+			<br>
+			I have already stayed away from creating mirrors of
+			these repositories on Codeberg and Sourcehut,
+			knowing this would never live up to their policy.
+			I am doing everything in my power (including commit
+			attribution) to make it as <em>clear</em> as possible
+			AI code exists, and will continue to exist for as
+			long as they are useful.</li>
+		<li>Also, I hate to pull this card, but it’s my project.
+			I want some autonomy over what <em>I</em> want.
+			Please don’t convince me to use more or less AI in
+			a way that is not being constructive, but that you
+			think you are entitled to my time, and my time is
+			worthless compared to a global AI gold-rush I can’t
+			meaningfully protest against as one person.  But this
+			is open source; you can fork it if you don’t like this
+			or me&hellip; Of course you’d have to have the same
+			demand for a Git-backed archive-friendly note-taking
+			+ vector-based drawing app, which&hellip; <strong>
+				<em>whaaaa&shy;aaa&shy;at?</em> D:</strong>
+			(Honestly you should tell me about it if that’s the
+			case; I’m very curious how you approach it.)</li>
+	</ul>
+	<p>That being said&hellip;</p>
+	<ul>
+		<li><b>Keep AI-generated code out of copyleft code</b>:
+			I think it is as important to refrain from adding
+			generated code to a FOSS project meant to exist
+			independently of corporations as it is to protect
+			the copyleft status of such.  (We gotta avoid the
+			lawsuits and all, y’know.)  Also, generated code is
+			in a sense more like contributed code (like an answer
+			you found on Stack Overflow); they may be included
+			for reference’s sake and for learning’s sake,
+			claiming authorship over it just don’t feel right.
+			<code>:&lt;</code>
+			<br>
+		That said, there is a remedy: we can <b>prefer primary
+			sources</b>, such as established open source projects,
+			<b>to generated code of clear origin</b>; using AI
+			more as a fuzzy search engine in that respect is
+			acceptable.  (I myself do something like this. :)</li>
+		<li><b>Clearly mark AI-generated files</b>: for transparency,
+			and because I don’t get a kick out of having commits
+			I didn’t write attributed to me.  I am only a person;
+			I can’t make 1000 commits, each with 300+ lines of
+			diff, per day.  (You can’t convince me to commit those
+			things under <em>my</em> name, for that matter!)
+			<br>
+		There is also the factor that is the corpus upon which LLM
+			models are trained, which is&hellip; the whole Internet,
+			irrespective of copyright.  Despite this, I think
+			being transparent about it, instead of hiding it, is a
+			meaningful mechanism to track AI-generated code (which
+			is essentially contributed code of unspecified origin)
+			compared to original changes.  It could do more harm
+			if we encouraged an environment that, instead of making
+			AI code as visible as possible, we mask them in attempt
+			to appeal to anti-AI users &mdash; if anything, I think
+			this could be a stronger reassurance that the portion
+			that do <em>not</em> contain LLM model attribution is
+			written by a real person.</li>
+		<li><b>Avoid AI-generated commit messages</b>: It is my belief
+			that even when the AI is correct and has good taste, the
+			comments it gives can be rather short-sighted.  (That is,
+			assuming it is correct and has good taste.)<br>Of course,
+			there is a better move that is <b>avoiding big patches</b>
+			in the first place, but I think keeping this step alone
+			is deterring enough to make you think twice about whether
+			you should commit something like that. :)</li>
+		<li><b>Avoid AI-anything visible to end users</b>: For prototyping,
+			sure; but leaving it there is just lazy/bad taste when
+			people are actually using it.</li>
+		<li><b><mark>No</mark> AI graphics/art.</b>  Some things are better when
+			they are never made.  (If you are an artist or a writer,
+			you probably know this very well.)  Even AI infographics
+			can (and <em>will</em>) get things horribly wrong; it’s
+			worth spending time in these cases because it’s quite
+			disrespectful to creative people when they are already
+			<a href="https://twitter.com/zemotion/status/2088067653768466896">a vulnerable group targeted by AI zealots</a>.
+			<br>
+			And it breaks trust that can’t be rebuilt.</li>
+		<li><b><mark>No</mark> AI dependency/endorsement.</b>  In particular, even
+			if the process of making the program may involve AI, the
+			maintenance and the active functionality of program should
+			<em>not</em> be dependent on, or endorse in any way, any
+			LLM-AI-provider.  (This also means I would avoid
+			<code>CLAUDE.md</code> and <code>AGENTS.md</code>, though
+			you may convince me otherwise since I am not a very
+			advanced user and don’t really see the point of doing
+			that yet. <code>^^;</code>)  AI is “here”, that bit
+			I can see and agree.  “Here to <em>stay</em>”, as in it
+			is sustainable and will continue to provide a consistent
+			interface, unfettered by pricing model controlled by AI
+			companies (or effectively gatekept by absurdly high
+			RAM requirement)?  That I doubt.  Using AI is fine,
+			but it should <em>only</em> produce maintainable software
+			and transferrable knowledge that outlive the AI boom &mdash;
+			and it should make sense to people even when they do
+			not have AI (or choose not to, for that matter).</li>
+	</ul>
+	<p>Environmental impacts and social/loneliness epidemic aside, it is
+	my belief that time is precious for everyone.  It doesn’t help demand
+	time from anyone if they regard the cost of time would be worth
+	resistance boycotting AI in an intrinsically unprofitable open-source
+	project.  People should not be obliged to abstain from a tool that,
+	with all its caveats too many to list here, have proven genuinely useful.
+	That said, this is a complicated matter with stances all throughout
+	the spectrum (hence the length of this page, even when it is completely
+	unrelated to the project.)  In either case, I hope that draws a healthy
+	boundary to make AI comfortable for those who want to help but may
+	consider AI as a means to save their time or resource on other things
+	they value in their lives, but not enough to attract obnoxious
+	individuals whose whole identity is&hellip;
+	<em>this</em>, yeah. :)</p>
+</body>

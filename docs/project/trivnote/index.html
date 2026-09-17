@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="UTF-8">
+	<title>The trivnote Project</title>
+	<meta name="description" content="trivnote">
+	<link rel="stylesheet" href="../style.css" type="text/css">
+</html>
+<body>
+	<h1>trivnote</h1>
+	<p>Welcome to the homepage of whatever this is.</p>
+	<p>“trivnote” is the (provisional?) name I gave it.
+	I named it after the trivlist environment in LaTeX, which is
+	short for “trivial list” I believe?  Anyways, “trivnote” is
+	trivial in the sense that it is (what I believe to be) the
+	most basic form of notes: <em>text</em> and drawings.</p>
+	<p>In case you somehow have the forbidden knowledge of
+	my last personal, sustained big project, trivnote is the
+	continuation of <a href="../perspective/">Project Perspective</a>.
+	(That is, it will simultaneously double as a diary/journal
+	notepad, with doodles/comics in the middle if you do that too. :)</p>
+	<p>But first, the boring information stuff&hellip;.</p>
+	<p>At present, two components have been registered:</p>
+	<ul>
+		<li><b>pub/project/trivnote.git</b> (<a href="https://gitlab.com/rapidcow/trivnote">GitLab</a>):
+			the project as an Android application (primarily
+			targeting Samsung tablets like mine)</li>
+		<li><b>pub/project/trivnote-rescues/apple-notes.git</b> (<a href="https://gitlab.com/rapidcow/trivnote-rescues-apple-notes">GitLab</a>):
+			Apple Notes NoteStore.sqlite, old drawing format
+			(UTI com.apple.drawing.2) and Coherence-CRDT
+			(UTI com.apple.pencil) study.  Importer sometime?
+			Eh.</li>
+	</ul>
+	<p>They can be cloned with <code>https://git.rapidcow.org/</code>⟨component⟩,
+	or you can find the GitLab clone URL from hyperlinks above.
+	If you want to contribute, email patches (with <a href="https://en.wikipedia.org/wiki/Patch_%28Unix%29">patch</a>, git-apply,
+	or git-am compatible diff formats) or a <a href="https://git-scm.com/docs/git-request-pull">request to pull</a>
+	to <a href="mailto&#58;foss&#64;rapidcow.org?subject=[trivnote]%20-insert%20title%20here-">foss&#64;rapidcow.org</a>,
+	or email me your public SSH key so I can grant you access to
+	push your branch directly to <code>git@git.rapidcow.org</code>.
+	Small patches/typo fixes are <em>strongly</em> encouraged!
+	Don’t feel obliged to fix a lot of things, you deserve
+	attribution if you spent time at all on it&hellip;
+	Please let me know your preferred name and email address
+	for Git that either uses an Internet hostname or a local
+	domain (that isn’t misleading) so I can credit you in the
+	<code>.mailmap</code>.</p>
+	<p>The plan is to also support Samsung notes, since there have been
+	a handful of <a href="https://github.com/twangodev/sdocx">reverse</a>
+	<a href="https://musaab.io/posts/2026/reverse-engineering-samsung-notes/">engineering</a>
+	attempts, and I myself got a Samsung tablet after seeking for an
+	iPad alternative.  That said, I have substantially more Apple notes
+	than I have Samsung notes, so I am modeling it after PKDrawings.
+	(Samsung Notes are also paginated, which while good for PDF, is not
+	good for me because I write/draw in a long strip and my stuff would
+	absolutely be severed midway if I adopted pagination <code>:x</code>)</p>
+	<p>On the topic of AI, I am not exactly against it, but I am not
+	exactly 100% permissive about it either.  I clarify them <a href="ai.html">here</a>.
+	In a nutshell, AI contributions are ok, provided that it is not
+	hard to review and you promise to be held responsible for anything
+	copyright-related (<a href="https://en.wikipedia.org/wiki/Developer_Certificate_of_Origin">Developer Certificate of Origin</a>).</p>
+	<hr>
+	<p>While I’m not too ambitious about where this goes,
+	I have a few principles in mind:</p>
+	<ul>
+		<li><b>Faithful/neutral data representation format</b>: Bottom
+			line, trivnote should function as an archive viewer.
+			Be liberal in what we accept, use exact math, and
+			be extensible.  (The primary purpose of trivnote is
+			to import data previously generated my Apple Notes,
+			so that’s why the rule is here.)</li>
+		<li><b>Self-describing data representation format</b>:
+			Although suboptimal, reading the raw data without
+			the schema should make some semblance of sense.
+			In our s-expression's case, this means prefer using
+			opaque symbols for labeling the adjacent numbers
+			to an externally-defined logic to jump to different
+			positions.</li>
+		<li><b>Native export/import</b>: Partial and full in the
+			absence of a network connection should be supported.</li>
+		<li><b>Explicit mutation stages</b>:
+			Like Git, saving (caching a state) and committing
+			(permanently registering a state) should be
+			explicitly authorized by the user.  These stages may
+			be collapsed if the user finds it convenient, but
+			<em>must</em> be de-couple-able.  (I should remind
+			you that this is primarily for archival, so my need
+			with an explicit commit stage is prioritized. ;P)</li>
+		<li><b>Network independence</b>:
+			Or <a href="https://www.inkandswitch.com/essay/local-first/">local-first</a>,
+			offline-first, whatever you call it.  The offline app
+			<em>is</em> the full app.  In addition, retrieving
+			content from a network should be sufficient for
+			populating a full copy that is functional offline
+			(with the exception of possibly large binary blobs
+			stored as soft links).  The big word for this idea
+			is called <a href="https://en.wikipedia.org/wiki/Optimistic_replication">optimistic replication</a>,
+			contrasted with the (boring) pessimistic replication.</li>
+		<li><b>Explicit conflict resolution</b>:
+			No global locks for coordination against a central
+			authority (though this is already invalidated with
+			the previous bullet point.)  Only verifiably orthogonal
+			components may be merged automatically; the rest
+			should be explicitly resolved.  (Like the 3-way merge
+			Git performs, but for freeform text and drawings.)
+			This is contrasted with conflict-free resolution type
+			(CRDT) systems, which, while I deeply respect, leaves
+			out the decision-making step that I greatly value for
+			archival purposes.</li>
+		<li><b>Network agnosticism</b>: Personally, I think TCP/IP
+			is pretty dope, but the nature of 802.11 WLAN
+			technology still requiring a central access point
+			makes Bluetooth Lower Energy (BLE) appealing.
+			It is therefore necessary that the protocols we
+			employ be as agnostic about the specific transport.
+			(And definitely not limit ourselves to HTTP REST.)</li>
+		<li><b>Peer-to-peer based synchronization</b>: When network is
+			enabled by user, prefer direct connection with peers to
+			connection with a cloud server (unless explicitly chosen
+			by the user).  Peers should be symmetrically equipped
+			with client/server software.  Network can be disabled and/or
+			enabled at will.  Each peer will be independently capable of
+			reconciling histories.</li>
+	</ul>
+	<ul>
+		<li><b>Rule of Simplicity</b>:
+			I want to be upfront about this: I personally suck at
+			writing small programs, and I’m not gonna pretend that
+			I will ship the smallest binary that runs on a toaster.
+			(This page itself is not the smallest page necessary.) 
+			However, I cite this rule <em>specifically</em> with
+			respect to (a) code at a module level, which I think
+			should be independently readable/comprehensible (see <a
+				href="http://www.catb.org/esr/writings/taoup/html/ch04s02.html"
+				>compactness and orthogonality</a>,
+			some things I can see myself agreeing with), and (b)
+			<strong>data format</strong>, which should be simple
+			and interpretable outside of any specific software.
+			The most lamentable example is Open Office XML (OOXML
+			for short); it is <em>technically</em> open standard
+			(and XML is, <em>technically</em>, plain text too),
+			but that doesn’t make programmers outside of Microsoft
+			implementing it any more pleasing. (It is arguable
+			that the complexity is due to years of accumulated
+			technical debt, and files open just fine by Office
+			Applications, but note my (implied) objection of it
+			as an interchangeable, implementation-neutral for
+			documents under practical constraints.)  A (IMO)
+			good example in contrast is OpenDocument Format
+			(ODF), which I personally haven’t tried parsing, but
+			have heard good things about it.  There is a tendency
+			for *nix users (like myself) to prefer text to binary
+			formats, but judging by that criterion can be a tad
+			bit limited when there are architectural decisions
+			that lock in the format, more than the specific
+			schemas employed.</li>
+<!--
+ Link dump!
+
+   *  https://jan.rychter.com/enblog/2009/3/23/the-javascript-trap-i-willingly-step-into.html
+      (In particular, Colin's comment)
+   *  https://news.ycombinator.com/item?id=118909
+      *  https://www.schneier.com/blog/archives/2008/02/lockin.html
+-->
+		<li><b>Rule of Transparency</b>:
+			Inspection of the running system should be easy, not just
+			to the so-called “developers”.  It is my belief that everyone
+			can be a developer; and the process to becoming one should
+			be made as frictionless and as unceremonious as possible.</li>
+		<li><b>Rule of Composition</b>:
+			Work with other applications.  Expect the output to be
+			input to another program, preferably without dependency
+			besides established standard libraries.</li>
+		<li><b>Rule of Separation</b>:
+			In ESR’s own words: “Separate policy from mechanism;
+			separate interfaces from engines.”  Specifically in
+			the case of Android development: library should utilize
+			OpenJDK and other pure-Java components, and should be
+			independently runnable and testable, independent of
+			Google's Android SDK.</li>
+<!--		<li><b>Rule of Diversity</b>: I don’t really understand this one.
+			I also feel like this doesn’t really apply to us, since
+			it’s more about ESR’s take on the approach to programming
+			in general.  See http://www.catb.org/esr/writings/taoup/html/unix_and_oo.html </li> -->
+	</ul>
+	<p>Concretely, I plan to implement these “features” like this:</p>
+	<ul>
+		<li><b>Git</b> for object storage, file history, and delta
+			transfer protocol.  (This means yes, for those of you
+			who prefer not to invest in hardware for self-host,
+			you can use a free GitHub as synchronization target;
+			and of course, your data won’t be held hostage by
+			GitHub, or whoever you choose. ;)</li>
+		<li>Data is represented as R7RS-compatible <b>s-expressions</b>.
+			The rationale is two-fold: (a) I am obsessed with Lisp,
+			for meta-programming, and as a language whose AST is
+			not just similar, but identical to the syntax; it’s
+			also insanely easy to parse (easier than JSON!)  And
+			(b) Because I am hand-rolling the parser, I get to
+			decide other nice properties, such as round-tripping
+			numbers (since I never trust floating-point) and exact
+			math (for rendering/graphics).</li>
+	</ul>
+</body>
