@@ -32,22 +32,17 @@
 	</ul>
 	<p>They can be cloned with <code>https://git.rapidcow.org/</code>⟨component⟩,
 	or you can find the GitLab clone URL from hyperlinks above.
-	If you want to contribute, email patches (with <a href="https://en.wikipedia.org/wiki/Patch_%28Unix%29">patch</a>, git-apply,
-	or git-am compatible diff formats) or a <a href="https://git-scm.com/docs/git-request-pull">request to pull</a>
-	to <a href="mailto&#58;foss&#64;rapidcow.org?subject=[trivnote]%20-insert%20title%20here-">foss&#64;rapidcow.org</a>,
-	or email me your public SSH key so I can grant you access to
-	push your branch directly to <code>git@git.rapidcow.org</code>.
-	Small patches/typo fixes are <em>strongly</em> encouraged!
-	Don’t feel obliged to fix a lot of things, you deserve
-	attribution if you spent time at all on it&hellip;
-	Please let me know your preferred name and email address
-	for Git that either uses an Internet hostname or a local
-	domain (that isn’t misleading) so I can credit you in the
-	<code>.mailmap</code>.</p>
+	If you want to contribute, I would like to know your preferred
+	patch/pull request collaboration workflow.  Email me:
+	<a href="mailto&#58;foss&#64;rapidcow.org?subject=[trivnote]%20I%20want%20to%20help%21">foss&#64;rapidcow.org</a>
+	so I can save myself writing 10+ alternative methods when
+	realistically people will only use a few&hellip;.  (If you
+	know my name, you can replace “foss” with it; but I am not
+	giving that out since scrapers find it easily <code>:x</code>)</p>
 	<p>The plan is to also support Samsung notes, since there have been
 	a handful of <a href="https://github.com/twangodev/sdocx">reverse</a>
 	<a href="https://musaab.io/posts/2026/reverse-engineering-samsung-notes/">engineering</a>
-	attempts, and I myself got a Samsung tablet after seeking for an
+	attempts, and I myself got a Samsung tablet after seeking an
 	iPad alternative.  That said, I have substantially more Apple notes
 	than I have Samsung notes, so I am modeling it after PKDrawings.
 	(Samsung Notes are also paginated, which while good for PDF, is not
@@ -71,10 +66,10 @@
 		<li><b>Self-describing data representation format</b>:
 			Although suboptimal, reading the raw data without
 			the schema should make some semblance of sense.
-			In our s-expression's case, this means prefer using
-			opaque symbols for labeling the adjacent numbers
-			to an externally-defined logic to jump to different
-			positions.</li>
+			In our s-expression's case, this means prefer
+			labeling the adjacent numbers with a textual symbol
+			to a fixed layout that relies on externally-defined
+			parser logic to jump to specific byte positions.</li>
 		<li><b>Native export/import</b>: Partial and full in the
 			absence of a network connection should be supported.</li>
 		<li><b>Explicit mutation stages</b>:
@@ -103,13 +98,13 @@
 			should be explicitly resolved.  (Like the 3-way merge
 			Git performs, but for freeform text and drawings.)
 			This is contrasted with conflict-free resolution type
-			(CRDT) systems, which, while I deeply respect, leaves
+			(CRDT) systems, which, while I deeply respect, leave
 			out the decision-making step that I greatly value for
 			archival purposes.</li>
 		<li><b>Network agnosticism</b>: Personally, I think TCP/IP
 			is pretty dope, but the nature of 802.11 WLAN
 			technology still requiring a central access point
-			makes Bluetooth Lower Energy (BLE) appealing.
+			makes Bluetooth Low Energy (BLE) appealing.
 			It is therefore necessary that the protocols we
 			employ be as agnostic about the specific transport.
 			(And definitely not limit ourselves to HTTP REST.)</li>
@@ -138,12 +133,12 @@
 			The most lamentable example is Open Office XML (OOXML
 			for short); it is <em>technically</em> open standard
 			(and XML is, <em>technically</em>, plain text too),
-			but that doesn’t make programmers outside of Microsoft
-			implementing it any more pleasing. (It is arguable
+			but that doesn’t it any more pleasing for programmers
+			outside of Microsoft to implement it. (It is arguable
 			that the complexity is due to years of accumulated
-			technical debt, and files open just fine by Office
-			Applications, but note my (implied) objection of it
-			as an interchangeable, implementation-neutral for
+			technical debt, and files open just fine in Office
+			Applications, but note my (implied) objection to it
+			as an interchangeable, implementation-neutral format for
 			documents under practical constraints.)  A (IMO)
 			good example in contrast is OpenDocument Format
 			(ODF), which I personally haven’t tried parsing, but
@@ -173,7 +168,7 @@
 		<li><b>Rule of Separation</b>:
 			In ESR’s own words: “Separate policy from mechanism;
 			separate interfaces from engines.”  Specifically in
-			the case of Android development: library should utilize
+			the case of Android development: the library should utilize
 			OpenJDK and other pure-Java components, and should be
 			independently runnable and testable, independent of
 			Google's Android SDK.</li>
