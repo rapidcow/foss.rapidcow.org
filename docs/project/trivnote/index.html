@@ -91,12 +91,10 @@
 			is called <a href="https://en.wikipedia.org/wiki/Optimistic_replication">optimistic replication</a>,
 			contrasted with the (boring) pessimistic replication.</li>
 		<li><b>Explicit conflict resolution</b>:
-			No global locks for coordination against a central
-			authority (though this is already invalidated with
-			the previous bullet point.)  Only verifiably orthogonal
-			components may be merged automatically; the rest
-			should be explicitly resolved.  (Like the 3-way merge
-			Git performs, but for freeform text and drawings.)
+			Only verifiably orthogonal components may be merged
+			automatically (and for text where there is no z-order,
+			orthogonality is not necessary, but the changes should
+			commute); the rest should be explicitly resolved.
 			This is contrasted with conflict-free resolution type
 			(CRDT) systems, which, while I deeply respect, leave
 			out the decision-making step that I greatly value for
@@ -116,6 +114,7 @@
 			enabled at will.  Each peer will be independently capable of
 			reconciling histories.</li>
 	</ul>
+	<p>And a select few Unix philosophy principles from ESR’s TAUOP:</p>
 	<ul>
 		<li><b>Rule of Simplicity</b>:
 			I want to be upfront about this: I personally suck at
