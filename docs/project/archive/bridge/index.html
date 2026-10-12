@@ -32,6 +32,19 @@
 			<a href="https://gitee.com/rapidcow/archive-bridge">Gitee</a>.
 			Not available on SourceHut or Codeberg since I’ve used AI
 			for reverse-engineering and prototyping.</p>
+			<p>archive-bridge is written in Java 17 and will remain on
+			Java 17 until Android considers supporting Java 21 or 25.
+			The package namespace is <code
+				>org.<wbr
+				>rapidcow.<wbr
+				><b>archive</b>.<wbr
+				><b>bridge</b></code>,
+			and source files under this namespace are always available
+			under LGPL v3+ (with the exception of AI-generated prototypes,
+			which are un-copyright-able and thus cannot be licensed.)</p>
+			<p>archive-bridge will also include basic applications on top
+			of the bridge libraries; when they are created, they are will
+			be licensed under GPL v3+ (with the same exception of AI code).</p>
 
 			<h2>What makes for a good bridge?</h2>
 			<p>A bridge is an adapter (dumb name; don’t judge me :x)
@@ -67,6 +80,89 @@
 			<p>(I don’t have working examples of this, so you’ll just
 			take my words for it. <code>:x</code>  In a nutshell, it’s
 			all you can expect from object-oriented programming&hellip;.)</p>
+
+			<h2>Bridges I will work on</h2>
+			<p>None of these are promises in any sense.  If you need
+			this, it’s best that you let me know through email (and
+			if you are willing, send me your files for testing) so I
+			can get more motivation.  (Sending me file does not equal
+			distributing it to the Internet unless you consent though!
+			I might have to publish the metadata like file names and
+			test files, so tell me if that might be a problem&hellip;
+			<code>:c</code>)</p>
+			<ul>
+				<li>iPhone/iPad backup created via <a href="https://man.archlinux.org/man/idevicebackup2.1.en"><b>idevicebackup2</b>(1)</a>:
+				obviously to get run analysis against the data
+				I have, I have to actually get the files. <code>=n=</code>
+				So this is a priority.  Namespace: ⟨not allocated⟩</li>
+				<li><a href="https://apps.apple.com/us/app/notes/id1110145109">Apple Notes</a>: I have 2k notes in this thing and
+				maybe a couple hundred drawings.  (It’s ironic;
+				between Procreate and Apple Notes, I like to draw
+				in Apple Notes more because I know deep down that
+				I do not deserve Procreate&hellip;. <code>XD</code>
+				But its infinite vertical canvas is also what sold
+				it; more than GoodNotes or Notability did for me
+				honestly.)  Namespace: <code
+					>org.<wbr
+					>rapidcow.<wbr
+					>archive.<wbr
+					>bridge.<wbr
+					><a href="apple/">apple</a>.<wbr
+					><a href="apple/notes/">notes</a></code
+					>.</li>
+				<li><a href="https://concepts.app/en/">Concepts</a>: I did the 14th birthday drawing for
+				my primary school friend in this app?  I haven’t
+				made anything nearly as complete since.  Anyways
+				it’s like Apple Notes drawings but goes off in infinite
+				directions, has <a href="https://www.reddit.com/r/ConceptsApp/comments/1gq3f0d/comment/lwvgp52/">super chill devs</a>,
+				and has an one-time payment for indefinite export
+				functionalities.  Android (msgpack) and iOS (binary)
+				will both be supported!  Namespace: <code
+					>org.<wbr
+					>rapidcow.<wbr
+					>archive.<wbr
+					>bridge.<wbr
+					><a href="tophatch/">tophatch</a>.<wbr
+					><a href="tophatch/concepts/">concepts</a></code
+					>.</li>
+				<li><a href="https://apps.microsoft.com/detail/9wzdncrdkjj2?hl=en-US&gl=US">Journalist</a>: 2018 me found this
+				somehow on the Microsoft Store? 🥴  Anyways.
+				I have like 3 files in here but I am writing a
+				decoder for the files.  It uses something called
+				<a href="https://learn.microsoft.com/en-us/uwp/specifications/ink-serialized-format">Ink Serialized Format</a>,
+				whose decoder is
+				<a href="https://source.dot.net/PresentationCore/MS/Internal/Ink/InkSerializedFormat/StrokeSerializer.cs.html">open-source</a>,
+				so I suppose I don’t have to worry&hellip;</li>
+			</ul>
+
+			<h2>Bridges I might work on</h2>
+			<ul>
+				<li>Penultimate: as a good exercise; though I have
+					nothing to recover (they are already rasterized
+					when I pulled them out of Evernote, and Penultimate
+					got discontinued by Evernote&hellip; sigh 😮‍💨)
+				<br>
+					I also need to wait until I can get a full iTunes
+					back up since save to PEN format doesn’t work.</li>
+				<li>Samsung Notes: a college acquaintance already does it.
+					It’s written in Rust, but I think he knows what
+					he is doing&hellip; (I also don’t have anything
+					interesting on Samsung Notes, except for a rattlesnake
+					because I was watched <a href="https://www.youtube.com/shorts/aYsr3B4bANc">this</a>.
+					But I’m guessing he isn’t artsy, so there is probably
+					ink pressure stuff left to figure out.  I still
+					regard Samsung Notes as being the easier ones (if
+					not easiest) to decode, given that it’s just JVM
+					code (Android APK instead of Mach-O).)</li>
+				<li>GoodNotes 5: I only care about the version that
+					has my files.  I have no interest in continuing
+					using GoodNotes.</li>
+				<li>Notability: same remark as GoodNotes.</li>
+				<li>OneNote: I don’t have anything interesting there.
+					I might just do it for fun though.  If I don’t,
+					I’m sure you can find plenty of *.one decoder
+					though&hellip; <code>:)</code></li>
+			</ul>
 		</main>
 	</body>
 </html>
