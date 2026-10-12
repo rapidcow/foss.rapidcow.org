@@ -9,6 +9,64 @@
 	</head>
 	<body>
 		<main>
+			<h1>The archive-bridge collection</h1>
+			<p>This is a first “<a href="..">project archive</a>” effort
+			I can put a name to.  Originally I was just trying to import
+			my Apple Notes drawings from the trivial notetaking app
+			(dumbly named <a href="../../trivnote/">trivnote</a>); I also
+			wanted to import my drawings from Concepts, and Samsung
+			eventually.  Then I want to get metadata from Procreate
+			and&hellip; wait you can actually decode GoodNotes?!</p>
+			<p>I realized that this is way more than just Apple Notes.
+			And since the second most important format I cared about,
+			Concepts, was not getting nearly as much attention as Apple
+			Notes had been getting, I just merged them into the shared
+			Java package namespace I had been using for both.</p>
+			<p>The canonical source code is at
+			<b><a href="https://git.rapidcow.org/usage">https://git.rapidcow.org/</a>pub/project/apple-notes.git</b>.
+			Mirrors exist at
+			<a href="https://gitlab.com/rapidcow/archive-bridge">GitLab</a>,
+			GitHub,
+			<a href="https://gitcode.com/rapidcow/archive-bridge">GitCode</a>,
+			and
+			<a href="https://gitee.com/rapidcow/archive-bridge">Gitee</a>.
+			Not available on SourceHut or Codeberg since I’ve used AI
+			for reverse-engineering and prototyping.</p>
+
+			<h2>What makes for a good bridge?</h2>
+			<p>A bridge is an adapter (dumb name; don’t judge me :x)
+			for a file format for which there doesn’t exist have a
+			well-known, robust SDK.  A bridge should be doable by me
+			(that is, nothing complicated on the level of OOXML / Adobe);
+			and it should be a relatively stable format that requires
+			no negotiation with Internet services (that is, no live
+			sync/polling.)</p>
+			<p>For it to be interesting, I will only bridge to formats
+			as close to the original, native storage as possible.  That
+			means if you export the database as CSV, I will not parse
+			the CSV!  (But if it is a ZIP'd CSV file, I could
+			consider&hellip; (I still think it is very doable to parse
+			that without a dedicate library though <code>&gt;:c</code>
+			part of what makes it interesting to me is also
+			domain-specific file formats for which there exists no
+			Internet standard formats, like PNG and SGML.))</p>
+
+			<h2>What makes for a bad bridge?</h2>
+			<p>Twitter.  First of all, I would personally banish something
+			as tumultuous as social media itself to a separate namespace,
+			like <code>org.rapidcow.archive.socials</code>; second, lots of
+			data require negotiation (such as liked tweets), which is not
+			an easy process.  (Also, please don’t ask me to call it X;
+			I would confuse it with my X11 window system.)</p>
+			<p>This same goes for Mastodon which, albeit open source, is
+			still far too complex for me to keep up.</p>
+
+			<h2>What does a bridge do?</h2>
+			<p>It adorns data structure with semantics.  Yep, that’s
+			about it.</p>
+			<p>(I don’t have working examples of this, so you’ll just
+			take my words for it. <code>:x</code>  In a nutshell, it’s
+			all you can expect from object-oriented programming&hellip;.)</p>
 		</main>
 	</body>
 </html>
