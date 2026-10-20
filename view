@@ -1,5 +1,6 @@
 #!/bin/sh
 port=8080
+cd "$(dirname "$0")" || exit
 while getopts hp: o
 do
 	case ${o} in
