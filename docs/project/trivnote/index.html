@@ -9,9 +9,9 @@
 <body>
 	<h1>trivnote</h1>
 	<p>Welcome to the homepage of whatever this is.</p>
-	<p>“trivnote” is the (provisional?) name I gave it.
+	<p><q>trivnote</q> is the (provisional?) name I gave it.
 	I named it after the trivlist environment in LaTeX, which is
-	short for “trivial list” I believe?  Anyways, “trivnote” is
+	short for <q>trivial list</q> I believe?  Anyways, <q>trivnote</q> is
 	trivial in the sense that it is (what I believe to be) the
 	most basic form of notes: <em>text</em> and drawings.</p>
 	<p>In case you somehow have the forbidden knowledge of
@@ -35,7 +35,7 @@
 	<a href="mailto&#58;foss&#64;rapidcow.org?subject=[trivnote]%20I%20want%20to%20help%21">foss&#64;rapidcow.org</a>
 	so I can save myself writing 10+ alternative methods when
 	realistically people will only use a few&hellip;.  (If you
-	know my name, you can replace “foss” with it; but I am not
+	know my name, you can replace <q>foss</q> with it; but I am not
 	giving that out since scrapers find it easily <code>:x</code>)</p>
 	<p>The plan is to also support Samsung notes, since there have been
 	a handful of <a href="https://github.com/twangodev/sdocx">reverse</a>
@@ -155,7 +155,7 @@
 -->
 		<li><b>Rule of Transparency</b>:
 			Inspection of the running system should be easy, not just
-			to the so-called “developers”.  It is my belief that everyone
+			to the so-called <q>developers</q>.  It is my belief that everyone
 			can be a developer; and the process to becoming one should
 			be made as frictionless and as unceremonious as possible.</li>
 		<li><b>Rule of Composition</b>:
@@ -163,8 +163,8 @@
 			input to another program, preferably without dependency
 			besides established standard libraries.</li>
 		<li><b>Rule of Separation</b>:
-			In ESR’s own words: “Separate policy from mechanism;
-			separate interfaces from engines.”  Specifically in
+			In ESR’s own words: <q>Separate policy from mechanism;
+			separate interfaces from engines.</q>  Specifically in
 			the case of Android development: the library should utilize
 			OpenJDK and other pure-Java components, and should be
 			independently runnable and testable, independent of
@@ -174,7 +174,7 @@
 			it’s more about ESR’s take on the approach to programming
 			in general.  See http://www.catb.org/esr/writings/taoup/html/unix_and_oo.html </li> -->
 	</ul>
-	<p>Concretely, I plan to implement these “features” like this:</p>
+	<p>Concretely, I plan to implement these <q>features</q> like this:</p>
 	<ul>
 		<li><b>Git</b> for object storage, file history, and delta
 			transfer protocol.  (This means yes, for those of you
@@ -182,7 +182,7 @@
 			you can use a free GitHub as synchronization target;
 			and of course, your data won’t be held hostage by
 			GitHub, or whoever you choose. ;)</li>
-		<li>Data is represented as R7RS-compatible <b>s-expressions</b>.
+		<li>Data is represented as (almost-)R7RS-compatible <b>S-expressions</b>.
 			The rationale is two-fold: (a) I am obsessed with Lisp,
 			for meta-programming, and as a language whose AST is
 			not just similar, but identical to the syntax; it’s
