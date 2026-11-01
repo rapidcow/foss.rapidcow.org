@@ -1,0 +1,26 @@
+#
+# phony rules
+#
+MAKE site
+	NEED index.html
+	NEED robots.txt
+	NEED CPAN/index.html
+	NEED CPAN/index.css
+	NEED CPAN/List-Search/index.html
+	NEED CPAN/Sort-Search/00INTRO.txt
+	NEED CPAN/Sort-Search/index.html
+	NEED    CPAN/Sort-Search/pod/Sort/Search.html
+	NEED    CPAN/Sort-Search/pod/Sort/Search/Cookbook.html
+	NEED project/index.html
+	NEED project/style.css
+	NEED project/archive/index.html
+	NEED    project/archive/bridge/index.html
+	NEED    project/archive/bridge/apple/index.html
+	NEED    project/archive/bridge/apple/notes/index.html
+	NEED    project/archive/bridge/tophatch/index.html
+	NEED    project/archive/bridge/tophatch/concepts/index.html
+	NEED project/perspective/index.html
+	NEED project/siteconf/index.html
+	NEED project/trivnote/index.html
+	NEED    project/trivnote/ai.html
+	NEED    project/trivnote/help.html

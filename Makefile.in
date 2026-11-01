@@ -1,0 +1,29 @@
+#
+# Transformation rules from $a/% to $b/%
+#
+robots.txt \
+CPAN/index.css \
+CPAN/Sort-Search/00INTRO.txt \
+	CPAN/Sort-Search/index.css \
+		CPAN/Sort-Search/pod/Sort/Search.html \
+		CPAN/Sort-Search/pod/Sort/Search/Cookbook.html \
+project/style.css:
+	cd -- ${A} && cp -- ${a}/${.TARGET} ${B}/${b}/${.TARGET}
+
+index.html \
+CPAN/index.html \
+CPAN/List-Search/index.html \
+CPAN/Sort-Search/index.html \
+project/index.html \
+project/archive/index.html \
+	project/archive/bridge/index.html \
+	project/archive/bridge/apple/index.html \
+	project/archive/bridge/apple/notes/index.html \
+	project/archive/bridge/tophatch/index.html \
+	project/archive/bridge/tophatch/concepts/index.html \
+project/perspective/index.html \
+project/siteconf/index.html \
+project/trivnote/index.html \
+	project/trivnote/ai.html \
+	project/trivnote/help.html:
+	cd -- ${A} && ${^X} render -B ${B} -- ${a}/${.TARGET} ${B}/${b}/${.TARGET}

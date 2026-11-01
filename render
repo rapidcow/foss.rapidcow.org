@@ -1,0 +1,90 @@
+#!/usr/bin/env perl
+# HAVE: render
+# NEED: ${B}/MY/config.mk
+# NEED: ${B}/MY/option.mk
+#
+# render - Template Toolkit webpage renderer
+#
+# To invoke this, add to your Makefile.in (or whatever you
+# set your "R" path to):
+#
+#    cd -- $A && ${^X} render -B $B -- $a/$@ $B/$b/$@
+#
+# GenLib is used solely for implementing [% locate PATH %].
+# If you prefer not to use it, simply remove the module
+# import line and exclude it from %V.  The script works
+# fine without it. ;)
+#
+# More information about Template Toolkit here:
+# https://template-toolkit.org/
+#
+use 5.006;
+use strict;
+use warnings;
+
+use Getopt::Std;
+use RdKw::WwW::GenGenLib qw( read_deps load_state );
+use RdKw::WwW::GenLib qw( locate );
+use Template;
+use Template::Exception;
+
+my %o;
+getopts('B:', \%o) or die "usage: $0 [-B BUILDDIR] apath bpath\n";
+my $B = defined $o{B} ? $o{B} : '.';
+@ARGV == 2 or die "$0: need exactly two args\n";
+my ($apath, $bpath) = @ARGV;
+
+#
+# Load configuration parameters and build options, so
+# we can expose them to the template.
+#
+my %S = load_state($B);
+my ($D, $O) = @S{qw( config option )};
+
+#
+# Find ourselves from the dependency graph declarations.
+# This pattern is purely symbolic, though we also accept
+# literal spelling, since some people like to treat ${a}
+# as a predefined constant (like how ${A} is).
+#
+my %I = read_deps($apath);
+defined $I{HAVE} or die "E: $apath: HAVE declaration not found\n";
+(my $L = $I{HAVE}) =~ s{\A(?:\$(?:\{A\}|A)/)?(?:\$(?:\{a\}|a)|\Q$D->{a}\E)/}{}
+	or $D->{a} eq '.' or die "E: $apath: HAVE `$I{HAVE}' not under \${a} ($D->{a})\n";
+
+#
+# Define Template variables (see also Template::Stash
+# if you want access to these from a plugin/filter).
+#
+my %v = (
+	D => $D,
+	O => $O,
+	locate => sub {
+		@_ == 1 or die Template::Exception->new(usage => "[% locate PATH %]");
+		locate($O, $L, @_);
+	},
+	location => $L,
+);
+
+#
+# Specify UTF-8 on both ends of Template Toolkit's I/O:
+#
+#   * ENCODING for $apath (input), as well any fetched
+#     files via INCLUDE / INSERT / PROCESS / WRAPPER.
+#   * binmode for $bpath (output).
+#
+# By nature of UTF-8, files should be able to round-trip
+# as opaque octets... but it's nice to have text decoded
+# when you need to do cool stuff with it. ;D
+#
+my $tt = Template->new({
+	ENCODING => 'UTF-8',
+	INCLUDE_PATH => [ '.', $D->{a} ],
+})
+	or die "[TT] ", $Template::ERROR, "\n";
+
+$tt->process($apath, \%v, $bpath,
+	{ binmode => ':encoding(UTF-8)' })
+	or die "[TT] ", $tt->error(), "\n";
+
+exit;  # goodbye!

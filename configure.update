@@ -1,0 +1,2 @@
+#!/bin/sh
+siteconf -i -Sa=. -Sb=docs -Obase_url=/ -Osite_url=https://foss.rapidcow.org -P web
