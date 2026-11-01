@@ -25,5 +25,5 @@ project/perspective/index.html \
 project/siteconf/index.html \
 project/trivnote/index.html \
 	project/trivnote/ai.html \
-	project/trivnote/help.html:
+	project/trivnote/help.html: render
 	cd -- ${A} && ${^X} render -B ${B} -- ${a}/${.TARGET} ${B}/${b}/${.TARGET}
