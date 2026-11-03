@@ -4,3 +4,4 @@ build.ninja
 .ninja_log
 MY/
 docs/
+*.orig

@@ -70,7 +70,11 @@ my %v = (
 	O => $O,
 	locate => sub {
 		@_ == 1 or die Template::Exception->new(usage => "[% locate PATH %]");
-		locate($O, $L, @_);
+		locate($O, $L, &rewrite);
+	},
+	rewrite => sub {
+		@_ == 1 or die Template::Exception->new(usage => "[% rewrite PATH %]");
+		goto &rewrite;
 	},
 	location => $L,
 );
@@ -97,3 +101,16 @@ $tt->process($apath, \%v, $bpath,
 	or die "[TT] ", $tt->error(), "\n";
 
 exit;  # goodbye!
+
+sub rewrite
+{
+	my ($christmas) = @_;
+	for ($christmas) {
+		s{([^/]+)\.html$}
+		 {$1 x ($1 ne ".html")}eig
+		if $O->{site_url} =~ m{^https?://}i;
+	}
+	# merry
+		$christmas;
+			# ?
+}
