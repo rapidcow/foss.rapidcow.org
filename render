@@ -79,6 +79,10 @@ my %v = (
 	location => $L,
 );
 
+# Alias `rewrite' to `path' since I enjoy
+# the shorter form too much.
+$v{path} = $v{rewrite};
+
 #
 # Specify UTF-8 on both ends of Template Toolkit's I/O:
 #

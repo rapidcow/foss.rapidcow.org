@@ -13,7 +13,7 @@
 <body>
 	<p><b>NOTE!</b>  If you came from the readme
 	of List-Search 0.4, the <em>correct</em> homepage (as
-	Build.PL would suggest otherwise) is <a href="[% locate('CPAN/List-Search/') | xml %]">
+	Build.PL would suggest otherwise) is <a href="[% locate('CPAN/List-Search/index.html') | xml %]">
 	https://foss.rapidcow.org/CPAN/List-Search/</a>.
 	Terribly sorry about the confusion!!!
 	</p>
@@ -69,8 +69,8 @@
 	<h2 id="POD">Documentation</h2>
 	<p>There are two PODs at the moment!</p>
 	<ul>
-		<li><a href="pod/Sort/Search.html">Sort::Search</a></li>
-		<li><a href="pod/Sort/Search/Cookbook.html">Sort::Search::Cookbook</a></li>
+		<li><a href="[% rewrite('pod/Sort/Search.html') | xml %]">Sort::Search</a></li>
+		<li><a href="[% rewrite('pod/Sort/Search/Cookbook.html') | xml %]">Sort::Search::Cookbook</a></li>
 	</ul>
 	<p>More is being written.  For now enjoy this!!! :)</p>
 	<h2 id="TXT">Essay</h2>
