@@ -1,16 +1,16 @@
---- render.orig	2026-11-02 21:38:53.583898014 -0600
-+++ render	2026-11-02 22:08:29.423502730 -0600
+--- render.orig	2026-11-06 15:43:12.108739000 -0600
++++ render	2026-11-06 15:43:12.118423000 -0600
 @@ -70,11 +70,19 @@
  	O => $O,
  	locate => sub {
  		@_ == 1 or die Template::Exception->new(usage => "[% locate PATH %]");
 -		locate($O, $L, @_);
 +		locate($O, $L, &rewrite);
-+	},
+ 	},
 +	rewrite => sub {
 +		@_ == 1 or die Template::Exception->new(usage => "[% rewrite PATH %]");
 +		goto &rewrite;
- 	},
++	},
  	location => $L,
  );
  
