@@ -129,7 +129,7 @@ sub rewrite
 	my ($christmas) = @_;
 	for ($christmas) {
 		s{([^/]+)\.html$}
-		 {$1 x ($1 ne "index")}eig
+		 {( $1 eq "index" : "" : $1 )}eig
 		if $O->{site_url} =~ m{^https?://}i;
 	}
 	# merry
