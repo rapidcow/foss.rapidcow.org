@@ -32,7 +32,9 @@ use strict;
 use warnings;
 
 use Getopt::Std;
-use RdKw::WwW::GenGenLib qw( read_deps load_state );
+use RdKw::WwW::GenGenLib 0.0002 qw(
+	read_deps load_state
+	norm_deps subs_deps uproot );
 use RdKw::WwW::GenLib qw( locate );
 use Template;
 use Template::Exception;
@@ -58,8 +60,28 @@ my ($D, $O) = @S{qw( config option )};
 #
 my %I = read_deps($apath);
 defined $I{HAVE} or die "E: $apath: HAVE declaration not found\n";
-(my $L = $I{HAVE}) =~ s{\A(?:\$(?:\{A\}|A)/)?(?:\$(?:\{a\}|a)|\Q$D->{a}\E)/}{}
-	or $D->{a} eq '.' or die "E: $apath: HAVE `$I{HAVE}' not under \${a} ($D->{a})\n";
+my $target = do {
+	my ($name, $norm, $real);
+	# Try symbolic prefix
+	if (defined ($name = uproot('${a}',
+		$norm = norm_deps($I{HAVE}))))
+	{
+		subs_deps($D, $name);
+	}
+	# Try literal prefix
+	elsif (defined ($name = uproot($D->{a},
+		$real = subs_deps($D, $norm))))
+	{
+		$name;
+	}
+	else {
+		my $aka = $real eq $I{HAVE} ? "" : " (which is `$real')";
+		die "E: $apath: HAVE `$I{HAVE}'$aka not "
+			. "under \${a} (which is `$D->{a}')\n";
+	}
+};
+# relapath doesn't do well with leading slashes.
+$target =~ s/\A\/+//;
 
 #
 # Define Template variables (see also Template::Stash
@@ -70,18 +92,14 @@ my %v = (
 	O => $O,
 	locate => sub {
 		@_ == 1 or die Template::Exception->new(usage => "[% locate PATH %]");
-		locate($O, $L, &rewrite);
+		locate($O, $target, &rewrite);
 	},
+	location => $target,
 	rewrite => sub {
 		@_ == 1 or die Template::Exception->new(usage => "[% rewrite PATH %]");
 		goto &rewrite;
 	},
-	location => $L,
 );
-
-# Alias `rewrite' to `path' since I enjoy
-# the shorter form too much.
-$v{path} = $v{rewrite};
 
 #
 # Specify UTF-8 on both ends of Template Toolkit's I/O:

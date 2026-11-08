@@ -1,27 +1,32 @@
---- render.orig	2026-11-06 15:43:12.108739000 -0600
-+++ render	2026-11-06 15:43:12.118423000 -0600
-@@ -70,11 +70,19 @@
+--- render.orig	2026-11-07 22:15:25.733076000 -0600
++++ render	2026-11-07 22:15:25.734853000 -0600
+@@ -32,7 +32,9 @@
+ use warnings;
+ 
+ use Getopt::Std;
+-use RdKw::WwW::GenGenLib 0.0002 qw( read_deps load_state norm_deps subs_deps uproot );
++use RdKw::WwW::GenGenLib 0.0002 qw(
++	read_deps load_state
++	norm_deps subs_deps uproot );
+ use RdKw::WwW::GenLib qw( locate );
+ use Template;
+ use Template::Exception;
+@@ -90,9 +92,13 @@
  	O => $O,
  	locate => sub {
  		@_ == 1 or die Template::Exception->new(usage => "[% locate PATH %]");
--		locate($O, $L, @_);
-+		locate($O, $L, &rewrite);
+-		locate($O, $target, @_);
++		locate($O, $target, &rewrite);
  	},
+ 	location => $target,
 +	rewrite => sub {
 +		@_ == 1 or die Template::Exception->new(usage => "[% rewrite PATH %]");
 +		goto &rewrite;
 +	},
- 	location => $L,
  );
  
-+# Alias `rewrite' to `path' since I enjoy
-+# the shorter form too much.
-+$v{path} = $v{rewrite};
-+
  #
- # Specify UTF-8 on both ends of Template Toolkit's I/O:
- #
-@@ -97,3 +105,16 @@
+@@ -117,3 +123,16 @@
  	or die "[TT] ", $tt->error(), "\n";
  
  exit;  # goodbye!
