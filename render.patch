@@ -1,17 +1,6 @@
---- render.orig	2026-11-07 22:21:56.941472000 -0600
-+++ render	2026-11-07 23:00:57.034682000 -0600
-@@ -32,7 +32,9 @@
- use warnings;
- 
- use Getopt::Std;
--use RdKw::WwW::GenGenLib 0.0002 qw( read_deps load_state norm_deps subs_deps uproot );
-+use RdKw::WwW::GenGenLib 0.0002 qw(
-+	read_deps load_state
-+	norm_deps subs_deps uproot );
- use RdKw::WwW::GenLib qw( locate );
- use Template;
- use Template::Exception;
-@@ -90,9 +92,13 @@
+--- render.orig	2026-11-08 12:44:23.811078631 -0600
++++ render	2026-11-08 12:46:29.921556702 -0600
+@@ -92,9 +92,13 @@
  	O => $O,
  	locate => sub {
  		@_ == 1 or die Template::Exception->new(usage => "[% locate PATH %]");
@@ -26,7 +15,7 @@
  );
  
  #
-@@ -117,3 +123,16 @@
+@@ -119,3 +123,16 @@
  	or die "[TT] ", $tt->error(), "\n";
  
  exit;  # goodbye!

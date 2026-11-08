@@ -34,7 +34,7 @@ use warnings;
 use Getopt::Std;
 use RdKw::WwW::GenGenLib 0.0002 qw(
 	read_deps load_state
-	norm_deps subs_deps uproot );
+	norm_dep subs_dep uproot );
 use RdKw::WwW::GenLib qw( locate );
 use Template;
 use Template::Exception;
@@ -60,17 +60,19 @@ my ($D, $O) = @S{qw( config option )};
 #
 my %I = read_deps($apath);
 defined $I{HAVE} or die "E: $apath: HAVE declaration not found\n";
-my $target = do {
+# relapath doesn't do well with the leading slash,
+# though people may have a habit of including it...
+(my $target = do {
 	my ($name, $norm, $real);
 	# Try symbolic prefix
 	if (defined ($name = uproot('${a}',
-		$norm = norm_deps($I{HAVE}))))
+		$norm = norm_dep($I{HAVE}))))
 	{
-		subs_deps($D, $name);
+		subs_dep($D, $name);
 	}
 	# Try literal prefix
 	elsif (defined ($name = uproot($D->{a},
-		$real = subs_deps($D, $norm))))
+		$real = subs_dep($D, $norm))))
 	{
 		$name;
 	}
@@ -79,9 +81,7 @@ my $target = do {
 		die "E: $apath: HAVE `$I{HAVE}'$aka not "
 			. "under \${a} (which is `$D->{a}')\n";
 	}
-};
-# relapath doesn't do well with leading slashes.
-$target =~ s/\A\/+//;
+}) =~ s/\A\/+//;
 
 #
 # Define Template variables (see also Template::Stash
