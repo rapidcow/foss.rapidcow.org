@@ -1,5 +1,5 @@
 --- render.orig	2026-11-07 22:21:56.941472000 -0600
-+++ render	2026-11-07 23:00:04.273335000 -0600
++++ render	2026-11-07 23:00:57.034682000 -0600
 @@ -32,7 +32,9 @@
  use warnings;
  
@@ -36,7 +36,7 @@
 +	my ($christmas) = @_;
 +	for ($christmas) {
 +		s{([^/]+)\.html$}
-+		 {( $1 eq "index" : "" : $1 )}eig
++		 {( $1 eq "index" ? "" : $1 )}eig
 +		if $O->{site_url} =~ m{^https?://}i;
 +	}
 +	# merry
