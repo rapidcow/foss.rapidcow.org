@@ -1,12 +1,11 @@
---- render.new	2026-11-09 11:38:46
-+++ render	2026-11-09 11:38:46
-@@ -92,9 +92,13 @@
+--- render.new	2026-11-09 15:44:27
++++ render	2026-11-09 15:45:08
+@@ -90,8 +90,12 @@
+ my %v = (
+ 	D => $D,
  	O => $O,
- 	locate => sub {
- 		@_ == 1 or die Template::Exception->new(usage => "[% locate PATH %]");
--		locate($O, $target, @_);
-+		locate($O, $target, &rewrite);
- 	},
+-	locate => sub { locate($O, $target, @_); },
++	locate => sub { rewrite(locate($O, $target, @_)); },
  	location => $target,
 +	rewrite => sub {
 +		@_ == 1 or die Template::Exception->new(usage => "[% rewrite PATH %]");
@@ -15,7 +14,7 @@
  );
  
  #
-@@ -119,3 +123,16 @@
+@@ -116,3 +120,16 @@
  	or die "[TT] ", $tt->error(), "\n";
  
  exit;  # goodbye!
