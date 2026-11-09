@@ -1,5 +1,6 @@
 #!/bin/sh
 set -e -x
 siteconf -i -f -Sa=. -Sb=docs -Obase_url=/ -Osite_url=https://foss.rapidcow.org -P web
+cp render render.new
 patch < render.patch
-diff -u render.orig render > render.patch
+diff -u render.new render > render.patch
