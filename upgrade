@@ -2,7 +2,7 @@
 set -e -x
 cp render render.old
 siteconf -i -f -Sa=. -Sb=docs -Obase_url=/ -Osite_url=https://foss.rapidcow.org -P web \
-	-MRdKw::WwW::GenGEnLib::Template::Provider
+	-MRdKw::WwW::GenGenlib::Template::Provider
 cp render render.new
 patch < render.patch
 diff -u render.new render > render.patch
