@@ -51,6 +51,7 @@ use RdKw::WwW::GenGenLib 0.0100 qw(
 	norm_dep subs_dep uproot to_fs );
 use RdKw::WwW::GenLib 0.0203 qw( locate );
 use Template;
+use RdKw::WwW::GenGenLib::Template::Provider;
 
 eval { Encode::Locale::decode_argv(Encode::FB_CROAK()); 1 }
 	or die "$0: cannot read the arguments in this locale\n";
@@ -124,13 +125,27 @@ my %v = (
 # as opaque octets... but it's nice to have text decoded
 # when you need to do cool stuff with it. ;D
 #
-my $tt = Template->new({
+# This uses a provider that provides access to out-of-tree
+# builds, even if they contain absolute paths, as long as
+# they are declared in a NEED/WANT header.  (It is possible
+# to disable this with ALLOW_DEPS => 0, or reinforce that
+# all access be declared with CHECK_DEPS => 1.)
+#
+# Also file paths are encoded to the system locale; that's
+# one reason to put up with this guy instead of the default
+# Template Provider. ;)
+#
+my $provider = RdKw::WwW::GenGenLib::Template::Provider->new({
+	SOURCE => $apath,
+	DEFINITION => $D,
 	ENCODING => 'UTF-8',
-	INCLUDE_PATH => [ '.', to_fs($D->{a}, 'E') ],
+	INCLUDE_PATH => [ '.', $D->{a} ],
 })
+	or die "[TT] ", RdKw::WwW::GenGenLib::Template::Provider->error(), "\n";
+my $tt = Template->new({ LOAD_TEMPLATES => [ $provider ] })
 	or die "[TT] ", $Template::ERROR, "\n";
 
-$tt->process(to_fs($apath, 'E'), \%v, to_fs($bpath, 'E'),
+$tt->process($apath, \%v, to_fs($bpath, 'E'),
 	{ binmode => ':encoding(UTF-8)' })
 	or die "[TT] ", $tt->error(), "\n";
 
