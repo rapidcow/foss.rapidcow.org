@@ -8,3 +8,7 @@ docs/
 *.rej
 *.new
 *.old
+# Obligatory
+.DS_Store
+._*
+*.sw[a-p]
