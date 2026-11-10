@@ -106,7 +106,7 @@ my %v = (
 	D => $D,
 	O => $O,
 	locate => sub { rewrite(locate($O, $target, @_)); },
- 	location => $target,
+	location => $target,
 	rewrite => sub {
 		@_ == 1 or die Template::Exception->new(usage => "[% rewrite PATH %]");
 		goto &rewrite;
