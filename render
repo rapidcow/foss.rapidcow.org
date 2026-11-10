@@ -28,17 +28,32 @@
 # More information about Template Toolkit here:
 # https://template-toolkit.org/
 #
-use 5.006;
+use 5.008;
 use strict;
 use warnings;
 
+use Encode ();
+use Encode::Locale ();
+use PerlIO::encoding ();
+
+# What we say is as the locale says (\x{...} where it cannot).
+# File names and arguments are characters, spelled as the
+# locale says; what is in the files is UTF-8.
+{
+	local $PerlIO::encoding::fallback = Encode::PERLQQ();
+	binmode STDOUT, ':encoding(console_out)';
+	binmode STDERR, ':encoding(console_out)';
+}
+
 use Getopt::Std;
-use RdKw::WwW::GenGenLib 0.0002 qw(
+use RdKw::WwW::GenGenLib 0.0100 qw(
 	read_deps load_state
-	norm_dep subs_dep uproot );
+	norm_dep subs_dep uproot to_fs );
 use RdKw::WwW::GenLib 0.0203 qw( locate );
 use Template;
 
+eval { Encode::Locale::decode_argv(Encode::FB_CROAK()); 1 }
+	or die "$0: cannot read the arguments in this locale\n";
 my %o;
 getopts('B:', \%o) or die "usage: $0 [-B BUILDDIR] apath bpath\n";
 my $B = defined $o{B} ? $o{B} : '.';
@@ -91,7 +106,7 @@ my %v = (
 	D => $D,
 	O => $O,
 	locate => sub { rewrite(locate($O, $target, @_)); },
-	location => $target,
+ 	location => $target,
 	rewrite => sub {
 		@_ == 1 or die Template::Exception->new(usage => "[% rewrite PATH %]");
 		goto &rewrite;
@@ -111,15 +126,15 @@ my %v = (
 #
 my $tt = Template->new({
 	ENCODING => 'UTF-8',
-	INCLUDE_PATH => [ '.', $D->{a} ],
+	INCLUDE_PATH => [ '.', to_fs($D->{a}, 'E') ],
 })
 	or die "[TT] ", $Template::ERROR, "\n";
 
-$tt->process($apath, \%v, $bpath,
+$tt->process(to_fs($apath, 'E'), \%v, to_fs($bpath, 'E'),
 	{ binmode => ':encoding(UTF-8)' })
 	or die "[TT] ", $tt->error(), "\n";
 
-exit;  # goodbye!
+exit 0;  # goodbye!
 
 sub rewrite
 {
