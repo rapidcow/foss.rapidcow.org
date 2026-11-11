@@ -1,0 +1,51 @@
+[%
+ # vim:filetype=tt2html
+ # HAVE: project/liblist/index.html
+ # NEED: project/generated.css
+-%]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>liblist</title>
+  <link rel="stylesheet" href="[% locate('project/generated.css') | xml %][% h = get_version('project/generated.css'); "?v=$h" IF h %]">
+  <style>
+    :root { color-scheme: light dark; }
+    body { max-width: 68ch; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; }
+    code { overflow-wrap: anywhere; }
+  </style>
+</head>
+<body>
+<main>
+  <nav><a href="[% locate('project/index.html') | xml %]">Projects</a></nav>
+  <h1>liblist</h1>
+  <llm-generated>
+    <p>liblist implements rapid’s property list: a small, line-oriented
+    key–value format inspired by mail and HTTP headers. A space separates a
+    key from its value, and indentation continues a value over multiple lines.
+    It is unrelated to Apple’s property list formats.</p>
+  </llm-generated>
+  <h2>Implementations</h2>
+  <llm-generated>
+    <p>The repository contains a Python implementation in
+    <code>rdks_list/</code> and a Perl implementation in <code>PairList/</code>.
+    The Python <code>rdks.list</code> reader and writer retain formatting
+    information alongside key–value pairs; they also support byte strings
+    without imposing a text encoding.</p>
+  </llm-generated>
+  <llm-generated>
+    <p>One use of the format is the configuration language for
+    <a href="[% locate('project/libmail/index.html') | xml %]">libmail’s
+    <code>compose.py</code></a>. The libraries provide the reader and writer;
+    the application gives the keys their meaning.</p>
+  </llm-generated>
+  <h2>License</h2>
+  <llm-generated>
+    <p>The Python and Perl implementations are free software under the
+    GNU General Public License, version 3 or later (GPL-3.0-or-later).
+    Their source directories contain the license notices and COPYING files.</p>
+  </llm-generated>
+</main>
+</body>
+</html>

@@ -26,11 +26,20 @@
     Message-ID parsing, Outlook Thread-Index utilities, and integrations
     with Python’s <code>email</code> package.</p>
   </llm-generated>
+  <h2>Describe the message you want to make</h2>
+  <llm-generated>
+    <p>With <code>compose.py</code>, a message’s MIME structure becomes
+    a text document you can edit and reuse. Describe a multipart message,
+    load its plain-text and HTML parts from files, and choose charsets,
+    transfer encodings, attachment names, and headers in the same input.
+    The composer turns that description into calls to Python’s email
+    library and libmail’s encoders.</p>
+  </llm-generated>
   <h2><code>compose.py</code></h2>
   <llm-generated>
     <p><code>compose.py</code> constructs MIME messages from a text-based
     configuration language. It uses the library’s mail components and
-    <code>rdks.list</code>. Template Toolkit can generate that input as a
+    <a href="[% locate('project/liblist/index.html') | xml %]"><code>rdks.list</code></a>. Template Toolkit can generate that input as a
     separate preprocessing step.</p>
   </llm-generated>
   <h2>Documentation and source layout</h2>
@@ -45,6 +54,13 @@
     <p>The repository also contains a separate Java implementation of
     quoted-printable utilities under <code>java/</code>, with a Gradle
     build and tests. It is separate from the Python package.</p>
+  </llm-generated>
+  <h2>License</h2>
+  <llm-generated>
+    <p>Ethan Meng’s code in libmail is free software under the GNU General
+    Public License, version 3 or later (GPL-3.0-or-later). The repository’s
+    LICENSE file also identifies Python Software Foundation code in the
+    contributed tests; COPYING contains the GPL text.</p>
   </llm-generated>
 </main>
 </body>

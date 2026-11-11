@@ -14,6 +14,7 @@ MAKE site
 	NEED project/index.html
 	NEED project/style.css
 	NEED project/generated.css
+	NEED project/liblist/index.html
 	NEED project/libmail/index.html
 	NEED project/archive/index.html
 	NEED    project/archive/bridge/index.html
