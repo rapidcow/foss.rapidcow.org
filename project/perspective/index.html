@@ -1,6 +1,6 @@
 [%
  # HAVE: project/perspective/index.html
- # NEED: ${B}/${b}/project/style.css
+ # NEED: project/style.css
 -%]
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Project Perspective</title>
 	<meta name="description" content="trivnote">
-	<link rel="stylesheet" href="[% locate('project/style.css') | xml %][% h = get_version('${B}/${b}/project/style.css'); "?v=$h" IF h %]" type="text/css">
+	<link rel="stylesheet" href="[% locate('project/style.css') | xml %][% h = get_version('project/style.css'); "?v=$h" IF h %]" type="text/css">
 </html>
 <body>
 	<h1>Perspective (stub)</h1>

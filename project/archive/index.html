@@ -1,6 +1,6 @@
 [%
  # HAVE: project/archive/index.html
- # NEED: ${B}/${b}/project/style.css
+ # NEED: project/style.css
 -%]
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +9,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>project archive!!!</title>
 		<meta name="description" content="HACK HACK HACK HACK">
-		<link rel="stylesheet" href="[% locate('project/style.css') | xml %][% h = get_version('${B}/${b}/project/style.css'); "?v=$h" IF h %]" type="text/css">
+		<link rel="stylesheet" href="[% locate('project/style.css') | xml %][% h = get_version('project/style.css'); "?v=$h" IF h %]" type="text/css">
 	</head>
 	<body>
 		<main>

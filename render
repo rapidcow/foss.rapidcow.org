@@ -208,4 +208,5 @@ sub get_version
 		$hash;
 	};
 	defined $hash or die Template::Exception->new(get_version => $@);
+	$hash;
 }

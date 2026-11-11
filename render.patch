@@ -24,7 +24,7 @@
  );
  
  #
-@@ -162,3 +169,43 @@
+@@ -162,3 +169,44 @@
  	or die "[TT] ", $tt->error(), "\n";
  
  exit 0;  # goodbye!
@@ -67,4 +67,5 @@
 +		$hash;
 +	};
 +	defined $hash or die Template::Exception->new(get_version => $@);
++	$hash;
 +}

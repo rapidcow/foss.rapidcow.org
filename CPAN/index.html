@@ -1,6 +1,6 @@
 [%
  # HAVE: CPAN/index.html
- # NEED: ${B}/${b}/CPAN/index.css
+ # NEED: CPAN/index.css
 -%]
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>rapidcow's CPAN Homepage</title>
 	<meta name="description" content="perl hacking !!!">
-	<link rel="stylesheet" href="[% locate('CPAN/index.css') | xml %][% h = get_version('${B}/${b}/CPAN/index.css'); "?v=$h" IF h %]" type="text/css">
+	<link rel="stylesheet" href="[% locate('CPAN/index.css') | xml %][% h = get_version('CPAN/index.css'); "?v=$h" IF h %]" type="text/css">
 </head>
 <body>
 	<h1 class="c">CPAN Homepage of rapidcow</h1>
