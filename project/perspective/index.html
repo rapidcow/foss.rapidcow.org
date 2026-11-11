@@ -1,55 +1,51 @@
 [%
  # vim:filetype=tt2html
  # HAVE: project/perspective/index.html
- # NEED: project/style.css
+ # NEED: project/generated.css
 -%]
 <!DOCTYPE html>
 <html lang="en">
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Project Perspective</title>
-	<meta name="description" content="trivnote">
-	<link rel="stylesheet" href="[% locate('project/style.css') | xml %][% h = get_version('project/style.css'); "?v=$h" IF h %]" type="text/css">
-</html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Perspective</title>
+  <link rel="stylesheet" href="[% locate('project/generated.css') | xml %][% h = get_version('project/generated.css'); "?v=$h" IF h %]">
+  <style>
+    :root { color-scheme: light dark; }
+    body { max-width: 68ch; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; }
+    code { overflow-wrap: anywhere; }
+  </style>
+</head>
 <body>
-	<h1>Perspective (stub)</h1>
-	<p>This is a stub page for Project Perspective, an attempt to
-	migrate my diary entries from the iOS app <a href="https://apps.apple.com/us/app/perspective-a-mindful-journal/id1186753097">Perspective</a>,
-	and &mdash; in the process of achieving so &mdash; specify a
-	neutral format for bodies of text tagged by date and time.</p>
-	<p>The Perspective library (also known as the psp library,
-	out of fear of getting called out for plagiarizing the name),
-	written in Python, provided an interface for:</p>
-	<ul>
-		<li><b>psp.types</b>: Entry/Panel object model
-			(a Panel being a container consisting of
-			entries written on or about a specific day)</li>
-		<li><b>psp.processors.json</b>: Parser that
-			converts between JSON and the object model.</li>
-		<li><b>psp.stringify</b>: presentation of the
-			object model as line-wrapped, formatted text.</li>
-	</ul>
-	<p>The Perspective library was, at one point, open source at
-	<code>&lt;https://github.com/rapidcow/perspective&gt;</code>.
-	It is open source in spirit, but I had removed all (known)
-	copies from the Internet, due to its (simultaneous) code-like
-	and journal-like nature.  It makes me uncomfortable publishing
-	it since I consider it to be an important part of me; and the
-	thought of badly programmed security bots forking it brought
-	discomfort.  (It may not offend me as much now, but I felt
-	pretty betrayed that the first PR I received was not even a
-	real person, and I’m apparently responsible for hunting down
-	this unknown researcher group now who might not even care
-	about me.  (I know I had invoked the nasty
-	<q><a href="https://github.com/github/dmca/blob/master/2024/07/2024-07-23-python-code.md">my repository had no explicit GPL license text</a></q>
-	thing but I wholeheartedly want to make open source software <code>:c</code>
-	I only did that because (1) I felt like the code was subpar,
-	being my first Python library ever, and (2) I don’t like it
-	when literal bots interact with my code when no real humans
-	have ever cared.
-	I actually don’t have such problems, now that I have abandoned
-	using Internet domain emails, so if anyone clones it they are
-	just further legitimizing my decentralized, non-revocable
-	domain names, so&hellip; that’ll help greatly! <code>&gt;:D</code>))
-	</p>
+<main>
+  <nav><a href="[% locate('project/index.html') | xml %]">Projects</a></nav>
+  <h1>Perspective</h1>
+  <llm-generated>
+    <p>Perspective is a Python diary-backup library, also called
+    <code>psp</code>. It grew out of preserving entries from the iOS
+    journaling app Perspective, with the broader aim of keeping diaries
+    usable outside the application that created them. It is an independent
+    project, not the app’s official library.</p>
+  </llm-generated>
+  <h2>Keep the dates, the words, and the attachments</h2>
+  <llm-generated>
+    <p>The library represents dated collections of entries as panels.
+    Its JSON loader and dumper handle text and references to external files,
+    while the formatter produces readable, line-wrapped diary text. Time-zone
+    handling lets entries retain their original offsets or be displayed in
+    a common time zone.</p>
+  </llm-generated>
+  <h2>Source and documentation</h2>
+  <llm-generated>
+    <p>Clone the repository with:
+    <code>git clone https://git.rapidcow.org/pub/project/perspective.git</code></p>
+  </llm-generated>
+  <llm-generated>
+    <p>The <a href="https://sphinx.rapidcow.org/perspective/">Perspective
+    documentation</a> includes the published 0.1 series, its API reference,
+    and examples. The Python package is under <code>src/</code> in the
+    repository; its import namespace is <code>psp</code>.</p>
+  </llm-generated>
+</main>
 </body>
+</html>
