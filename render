@@ -113,8 +113,7 @@ my %v = (
 	get_version => \&get_version,
 	location => $target,
 	rewrite => sub {
-		@_ == 1 or die Template::Exception->new(usage => "[% rewrite PATH %]");
-		goto &rewrite;
+		die Template::Exception->new(permanent => "Directly calling rewrite is obsolete. use locate's relative form.");
 	},
 );
 
@@ -146,10 +145,10 @@ my %v = (
 # an explicit whitelist of symbolic prefixes, specify
 # ALLOW_PREFIXES.  To have additional prefixes considered
 # for a symbolic names, specify PREFIXES.  In both cases
-# the list is comprehensive, so it is possible to opt out
-# of any standard prefix by omitting them.
+# the list is comprehensive, so it is possible to remove
+# a standard prefix by omitting it from the list.
 #
-# More options documented in the perldoc of
+# Options are documented in the perldoc of
 # RdKw::WwW::GenGenLib::Template::Provider.
 #
 my $provider = RdKw::WwW::GenGenLib::Template::Provider->new({

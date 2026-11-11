@@ -1,0 +1,51 @@
+[%
+ # vim:filetype=tt2html
+ # HAVE: project/libmail/index.html
+ # NEED: project/generated.css
+-%]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>libmail</title>
+  <link rel="stylesheet" href="[% locate('project/generated.css') | xml %][% h = get_version('project/generated.css'); "?v=$h" IF h %]">
+  <style>
+    :root { color-scheme: light dark; }
+    body { max-width: 68ch; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; }
+    code { overflow-wrap: anywhere; }
+  </style>
+</head>
+<body>
+<main>
+  <nav><a href="[% locate('project/index.html') | xml %]">Projects</a></nav>
+  <h1>libmail</h1>
+  <llm-generated>
+    <p>libmail is a collection of mail utilities. Its Python package,
+    <code>rdks.mail</code>, includes MIME transfer encoders and decoders,
+    Message-ID parsing, Outlook Thread-Index utilities, and integrations
+    with Python’s <code>email</code> package.</p>
+  </llm-generated>
+  <h2><code>compose.py</code></h2>
+  <llm-generated>
+    <p><code>compose.py</code> constructs MIME messages from a text-based
+    configuration language. It uses the library’s mail components and
+    <code>rdks.list</code>. Template Toolkit can generate that input as a
+    separate preprocessing step.</p>
+  </llm-generated>
+  <h2>Documentation and source layout</h2>
+  <llm-generated>
+    <p>The Python documentation is not published here yet. The repository
+    contains Sphinx sources under <code>docs/src/</code>, including the
+    compose language reference in <code>docs/src/compose.rst</code>.
+    The implementation is under <code>rdks/mail/</code> and its tests are
+    under <code>tests/</code>.</p>
+  </llm-generated>
+  <llm-generated>
+    <p>The repository also contains a separate Java implementation of
+    quoted-printable utilities under <code>java/</code>, with a Gradle
+    build and tests. It is separate from the Python package.</p>
+  </llm-generated>
+</main>
+</body>
+</html>

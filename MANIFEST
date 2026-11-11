@@ -13,6 +13,8 @@ MAKE site
 	NEED    CPAN/Sort-Search/pod/Sort/Search/Cookbook.html
 	NEED project/index.html
 	NEED project/style.css
+	NEED project/generated.css
+	NEED project/libmail/index.html
 	NEED project/archive/index.html
 	NEED    project/archive/bridge/index.html
 	NEED    project/archive/bridge/apple/index.html
