@@ -1,10 +1,12 @@
 the rebased commit is b3313b5ef618924dfe78f0fa306f94d3581bb5b6!
 
-here's the output of `git show --notes=evi --stat'
+here's the output of `git show --format=fuller --notes=evi --stat'
 
 commit b3313b5ef618924dfe78f0fa306f94d3581bb5b6
-Author: Ethan Meng <rapidcow@RCs-T480s.local>
-Date:   Wed May 6 17:33:49 2026 -0500
+Author:     Ethan Meng <rapidcow@RCs-T480s.local>
+AuthorDate: Wed May 6 17:33:49 2026 -0500
+Commit:     Ethan Meng <rapidcow@RCs-T480s.local>
+CommitDate: Wed May 6 17:33:49 2026 -0500
 
     s/github.com/codeberg.org/ README and elsewhere
 
