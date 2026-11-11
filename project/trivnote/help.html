@@ -1,5 +1,6 @@
 [%
  # HAVE: project/trivnote/help.html
+ # NEED: ${B}/${b}/project/style.css
 -%]
 <!DOCTYPE html>
 <html lang="en">
@@ -7,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Contribution guide</title>
 	<meta name="description" content="trivnote contrib guide">
-	<link rel="stylesheet" href="[% locate('project/style.css') | xml %]" type="text/css">
+	<link rel="stylesheet" href="[% locate('project/style.css') | xml %][% h = get_version('${B}/${b}/project/style.css'); "?v=$h" IF h %]" type="text/css">
 </html>
 <body>
 	<h1>Contribution guide</h1>

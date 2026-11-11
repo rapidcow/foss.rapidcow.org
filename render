@@ -53,6 +53,8 @@ use RdKw::WwW::GenGenLib 0.0100 qw(
 use RdKw::WwW::GenLib 0.0203 qw( locate );
 use Template;
 use RdKw::WwW::GenGenLib::Template::Provider;
+use Digest::SHA;
+use File::Spec;
 
 eval { Encode::Locale::decode_argv(Encode::FB_CROAK()); 1 }
 	or die "$0: cannot read the arguments in this locale\n";
@@ -68,6 +70,7 @@ my ($apath, $bpath) = @ARGV;
 #
 my %S = load_state($B);
 my ($D, $O) = @S{qw( config option )};
+my $built = File::Spec->canonpath("$D->{B}/$D->{b}");
 
 #
 # Find ourselves from the dependency graph declarations.
@@ -108,6 +111,7 @@ my %v = (
 	D => $D,
 	O => $O,
 	locate => sub { rewrite(locate($O, $target, @_)); },
+	get_version => \&get_version,
 	location => $target,
 	rewrite => sub {
 		@_ == 1 or die Template::Exception->new(usage => "[% rewrite PATH %]");
@@ -178,4 +182,28 @@ sub rewrite
 	# merry
 		$christmas;
 			# ?
+}
+
+# Version the built bytes of a declared resource (NEED it in the header):
+# get_version('${B}/${b}/x.css'), or as written out.
+sub get_version
+{
+	@_ == 1 or die "get_version requires one resource name\n";
+	my ($name) = @_;
+	my $path = File::Spec->canonpath(subs_dep($D, $name));
+	$built eq '.' || index($path, "$built/") == 0
+		or die "get_version: $name is not built (not under \${B}/\${b})\n";
+	# (as it is, not looked for in INCLUDE_PATH)
+	my $error;
+	($path, $error) = $provider->access(
+		File::Spec->file_name_is_absolute($path) ? $path : "./$path");
+	defined $error and die "get_version: $error\n";
+	defined $path or die "get_version: $name is not there\n";
+	open my $fh, '<:raw', $path or die "open $path: $!\n";
+	my $dgst = Digest::SHA->new(1);
+	$dgst->addfile($fh);
+	close $fh or die "close $path: $!\n";
+	my $hash = $dgst->b64digest;
+	$hash =~ tr'+/='-_.';
+	$hash;
 }

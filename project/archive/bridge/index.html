@@ -1,5 +1,6 @@
 [%
  # HAVE: project/archive/bridge/index.html
+ # NEED: ${B}/${b}/project/style.css
 -%]
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +9,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>archive/bridge</title>
 		<meta name="description" content="bridge across chasm from beyond">
-		<link rel="stylesheet" href="[% locate('project/style.css') | xml %]" type="text/css">
+		<link rel="stylesheet" href="[% locate('project/style.css') | xml %][% h = get_version('${B}/${b}/project/style.css'); "?v=$h" IF h %]" type="text/css">
 	</head>
 	<body>
 		<main>

@@ -1,5 +1,6 @@
 [%
  # HAVE: CPAN/List-Search/index.html
+ # NEED: ${B}/${b}/CPAN/index.css
 -%]
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>List::Search</title>
 	<meta name="description" content="List::Search">
-	<link rel="stylesheet" href="[% locate('CPAN/index.css') | xml %]" type="text/css">
+	<link rel="stylesheet" href="[% locate('CPAN/index.css') | xml %][% h = get_version('${B}/${b}/CPAN/index.css'); "?v=$h" IF h %]" type="text/css">
 </head>
 <body>
 	<h1 id="NAME">List::Search</h1>

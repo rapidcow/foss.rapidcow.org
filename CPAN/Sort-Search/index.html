@@ -1,5 +1,6 @@
 [%
  # HAVE: CPAN/Sort-Search/index.html
+ # NEED: ${B}/${b}/CPAN/index.css
 -%]
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Sort::Search</title>
 	<meta name="description" content="general-purpose binary search functions">
-	<link rel="stylesheet" href="[% locate('CPAN/index.css') | xml %]" type="text/css">
+	<link rel="stylesheet" href="[% locate('CPAN/index.css') | xml %][% h = get_version('${B}/${b}/CPAN/index.css'); "?v=$h" IF h %]" type="text/css">
 </head>
 <body>
 	<p><b>NOTE!</b>  If you came from the readme
