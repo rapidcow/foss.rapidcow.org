@@ -70,7 +70,6 @@ my ($apath, $bpath) = @ARGV;
 #
 my %S = load_state($B);
 my ($D, $O) = @S{qw( config option )};
-my $built = File::Spec->canonpath("$D->{B}/$D->{b}");
 
 #
 # Find ourselves from the dependency graph declarations.
@@ -186,24 +185,27 @@ sub rewrite
 
 # Version the built bytes of a declared resource (NEED it in the header):
 # get_version('${B}/${b}/x.css'), or as written out.
+#
+# Peers are OK
 sub get_version
 {
-	@_ == 1 or die "get_version requires one resource name\n";
+	@_ == 1 or die Template::Exception->new(usage => "[% get_version(FILE) %]");
 	my ($name) = @_;
-	my $path = File::Spec->canonpath(subs_dep($D, $name));
-	$built eq '.' || index($path, "$built/") == 0
-		or die "get_version: $name is not built (not under \${B}/\${b})\n";
-	# (as it is, not looked for in INCLUDE_PATH)
-	my $error;
-	($path, $error) = $provider->access(
-		File::Spec->file_name_is_absolute($path) ? $path : "./$path");
-	defined $error and die "get_version: $error\n";
-	defined $path or die "get_version: $name is not there\n";
-	open my $fh, '<:raw', $path or die "open $path: $!\n";
-	my $dgst = Digest::SHA->new(1);
-	$dgst->addfile($fh);
-	close $fh or die "close $path: $!\n";
-	my $hash = $dgst->b64digest;
-	$hash =~ tr'+/='-_.';
-	$hash;
+	my $hash = eval {
+		my $path = File::Spec->canonpath(subs_dep($D, $name, strict => 1));
+		my $aka = ($name eq $path) ? "" : " (aka `$name')";
+		# (as it is, not looked for in INCLUDE_PATH)
+		my $error;
+		($path, $error) = $provider->access($path);
+		defined $error and die "Access denied: $error\n";
+		defined $path or die "File `$name'$aka not found\n";
+		open my $fh, '<:raw', to_fs($path, 'get_version')
+			or die "open `$path' (aka `$name'): $!\n";
+		my $digest = Digest::SHA->new(1);
+		$digest->addfile($fh);
+		close $fh or die "close `$path' (aka `$name'): $!\n";
+		(my $hash = $digest->b64digest()) =~ tr'+/='-_.';
+		$hash;
+	};
+	defined $hash or die Template::Exception->new(get_version => $@);
 }

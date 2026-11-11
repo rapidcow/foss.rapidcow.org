@@ -1,8 +1,46 @@
 #!/bin/sh
-set -e -x
-cp render render.old
-siteconf -i -f -Sa=. -Sb=docs -Obase_url=/ -Osite_url=https://foss.rapidcow.org -P web \
-	-MRdKw::WwW::GenGenLib::Template::Provider
-cp render render.new
-patch < render.patch
-diff -u render.new render > render.patch
+set -e
+save=0
+while getopts s o
+do
+	case $o in
+	s)
+		save=1
+		;;
+	*)
+		exit 1
+		;;
+	esac
+done
+shift $(( OPTIND - 1 ))
+
+init ()
+{
+	siteconf -i -Sa=. -Sb=docs -Obase_url=/ -Osite_url=https://foss.rapidcow.org -P web \
+		-MRdKw::WwW::GenGenLib::Template::Provider "$@"
+}
+save ()
+{
+	diff -u -L a/render -L b/render render.new render > render.patch
+}
+
+if [ $save -eq 0 ]
+then
+(
+	set -x
+	mv render render.old
+	init -f
+	cp render render.new
+	patch < render.patch
+	diff -q render render.old || save
+)
+else
+(
+	set -x
+	mv render render.old
+	init -f
+	mv render render.new
+	mv render.old render
+	save
+)
+fi
