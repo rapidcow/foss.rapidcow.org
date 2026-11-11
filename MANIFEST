@@ -14,8 +14,8 @@ MAKE site
 	NEED project/index.html
 	NEED project/style.css
 	NEED project/generated.css
-	NEED project/liblist/index.html
-	NEED project/libmail/index.html
+	NEED lib/python3/liblist/index.html
+	NEED lib/python3/libmail/index.html
 	NEED project/archive/index.html
 	NEED    project/archive/bridge/index.html
 	NEED    project/archive/bridge/apple/index.html

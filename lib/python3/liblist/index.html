@@ -1,6 +1,6 @@
 [%
  # vim:filetype=tt2html
- # HAVE: project/liblist/index.html
+ # HAVE: lib/python3/liblist/index.html
  # NEED: project/generated.css
 -%]
 <!DOCTYPE html>
@@ -26,25 +26,28 @@
     key from its value, and indentation continues a value over multiple lines.
     It is unrelated to Apple’s property list formats.</p>
   </llm-generated>
-  <h2>Implementations</h2>
+  <h2>Python implementation</h2>
   <llm-generated>
-    <p>The repository contains a Python implementation in
-    <code>rdks_list/</code> and a Perl implementation in <code>PairList/</code>.
-    The Python <code>rdks.list</code> reader and writer retain formatting
+    <p>The Python <code>rdks.list</code> reader and writer retain formatting
     information alongside key–value pairs; they also support byte strings
     without imposing a text encoding.</p>
   </llm-generated>
   <llm-generated>
     <p>One use of the format is the configuration language for
-    <a href="[% locate('project/libmail/index.html') | xml %]">libmail’s
+    <a href="[% locate('lib/python3/libmail/index.html') | xml %]">libmail’s
     <code>compose.py</code></a>. The libraries provide the reader and writer;
     the application gives the keys their meaning.</p>
   </llm-generated>
+  <h2>Source</h2>
+  <llm-generated>
+    <p>The source is on <a href="https://gitlab.com/rapidcow/liblist">GitLab</a>.
+    Clone it with <code>git clone https://gitlab.com/rapidcow/liblist.git</code>.</p>
+  </llm-generated>
   <h2>License</h2>
   <llm-generated>
-    <p>The Python and Perl implementations are free software under the
+    <p>The Python library is free software under the
     GNU General Public License, version 3 or later (GPL-3.0-or-later).
-    Their source directories contain the license notices and COPYING files.</p>
+    The source includes license notices and a COPYING file.</p>
   </llm-generated>
 </main>
 </body>

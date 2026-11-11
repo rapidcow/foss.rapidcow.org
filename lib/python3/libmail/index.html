@@ -1,6 +1,6 @@
 [%
  # vim:filetype=tt2html
- # HAVE: project/libmail/index.html
+ # HAVE: lib/python3/libmail/index.html
  # NEED: project/generated.css
 -%]
 <!DOCTYPE html>
@@ -39,7 +39,7 @@
   <llm-generated>
     <p><code>compose.py</code> constructs MIME messages from a text-based
     configuration language. It uses the library’s mail components and
-    <a href="[% locate('project/liblist/index.html') | xml %]"><code>rdks.list</code></a>. Template Toolkit can generate that input as a
+    <a href="[% locate('lib/python3/liblist/index.html') | xml %]"><code>rdks.list</code></a>. Template Toolkit can generate that input as a
     separate preprocessing step.</p>
   </llm-generated>
   <h2>Documentation and source layout</h2>
@@ -50,10 +50,10 @@
     The implementation is under <code>rdks/mail/</code> and its tests are
     under <code>tests/</code>.</p>
   </llm-generated>
+  <h2>Source</h2>
   <llm-generated>
-    <p>The repository also contains a separate Java implementation of
-    quoted-printable utilities under <code>java/</code>, with a Gradle
-    build and tests. It is separate from the Python package.</p>
+    <p>The source is on <a href="https://gitlab.com/rapidcow/libmail">GitLab</a>.
+    Clone it with <code>git clone https://gitlab.com/rapidcow/libmail.git</code>.</p>
   </llm-generated>
   <h2>License</h2>
   <llm-generated>
