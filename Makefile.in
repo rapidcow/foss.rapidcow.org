@@ -7,6 +7,7 @@ CPAN/Sort-Search/00INTRO.txt \
 	CPAN/Sort-Search/index.css \
 		CPAN/Sort-Search/pod/Sort/Search.html \
 		CPAN/Sort-Search/pod/Sort/Search/Cookbook.html \
+project/generated.css \
 project/style.css:
 	cd -- ${A} && cp -- ${a}/${.TARGET} ${B}/${b}/${.TARGET}
 
@@ -15,6 +16,7 @@ CPAN/index.html \
 CPAN/List-Search/index.html \
 CPAN/Sort-Search/index.html \
 project/index.html \
+project/libmail/index.html \
 project/archive/index.html \
 	project/archive/bridge/index.html \
 	project/archive/bridge/apple/index.html \
