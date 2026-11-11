@@ -13,10 +13,10 @@
 <body>
 	<h1>Projects</h1>
 	<ul>
-		<li><a href="[% rewrite('archive/index.html') | xml %]">archive</a> (ongoing)</li>
-		<li><a href="[% rewrite('perspective/index.html') | xml %]">Perspective</a> (2021–2023)</li>
-		<li><a href="[% rewrite('libmail/index.html') | xml %]">libmail</a></li>
-		<li><a href="[% rewrite('siteconf/index.html') | xml %]">siteconf</a></li>
-		<li><a href="[% rewrite('trivnote/index.html') | xml %]">trivnote</a> (present; companian project of archive)</li>
+		<li><a href="[% locate('./archive/index.html') | xml %]">archive</a> (ongoing)</li>
+		<li><a href="[% locate('./perspective/index.html') | xml %]">Perspective</a> (2021–2023)</li>
+		<li><a href="[% locate('./libmail/index.html') | xml %]">libmail</a></li>
+		<li><a href="[% locate('./siteconf/index.html') | xml %]">siteconf</a></li>
+		<li><a href="[% locate('./trivnote/index.html') | xml %]">trivnote</a> (present; companian project of archive)</li>
 	</ul>
 </body>
