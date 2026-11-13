@@ -1,15 +1,15 @@
 --- a/render
 +++ b/render
-@@ -53,6 +53,8 @@
+@@ -44,6 +44,8 @@
  use RdKw::WwW::GenLib 0.0203 qw( locate );
  use Template;
  use RdKw::WwW::GenGenLib::Template::Provider;
 +use Digest::SHA;
 +use File::Spec;
  
- eval { Encode::Locale::decode_argv(Encode::FB_CROAK()); 1 }
- 	or die "$0: cannot read the arguments in this locale\n";
-@@ -107,8 +109,13 @@
+ 
+ my $cs = RdKw::I18N::CodeSets->new();
+@@ -122,8 +124,13 @@
  my %v = (
  	D => $D,
  	O => $O,
@@ -24,7 +24,7 @@
  );
  
  #
-@@ -160,3 +167,44 @@
+@@ -175,3 +182,44 @@
  	or die "[TT] ", $tt->error(), "\n";
  
  exit 0;  # goodbye!
@@ -58,7 +58,7 @@
 +		($path, $error) = $provider->access($path);
 +		defined $error and die "Access denied: $error\n";
 +		defined $path or die "File `$name'$aka not found\n";
-+		open my $fh, '<:raw', to_fs($path, 'get_version')
++		open my $fh, '<:raw', $cs->to_fs($path, { prog => 'get_version' })
 +			or die "open `$path' (aka `$name'): $!\n";
 +		my $digest = Digest::SHA->new(1);
 +		$digest->addfile($fh);
