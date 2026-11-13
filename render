@@ -128,8 +128,7 @@ my %v = (
 	get_version => \&get_version,
 	location => $target,
 	rewrite => sub {
-		@_ == 1 or die Template::Exception->new(usage => "[% rewrite PATH %]");
-		goto &rewrite;
+		die Template::Exception->new(permanent => "Directly calling rewrite is obsolete. use locate's relative form.");
 	},
 );
 

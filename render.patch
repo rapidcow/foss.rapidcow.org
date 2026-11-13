@@ -9,7 +9,7 @@
  
  
  my $cs = RdKw::I18N::CodeSets->new();
-@@ -122,8 +124,13 @@
+@@ -122,8 +124,12 @@
  my %v = (
  	D => $D,
  	O => $O,
@@ -18,13 +18,12 @@
 +	get_version => \&get_version,
  	location => $target,
 +	rewrite => sub {
-+		@_ == 1 or die Template::Exception->new(usage => "[% rewrite PATH %]");
-+		goto &rewrite;
++		die Template::Exception->new(permanent => "Directly calling rewrite is obsolete. use locate's relative form.");
 +	},
  );
  
  #
-@@ -175,3 +182,44 @@
+@@ -175,3 +181,44 @@
  	or die "[TT] ", $tt->error(), "\n";
  
  exit 0;  # goodbye!
