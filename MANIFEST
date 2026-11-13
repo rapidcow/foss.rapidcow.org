@@ -1,7 +1,7 @@
 #
 # phony rules
 #
-MAKE site
+MAKE docs
 	NEED index.html
 	NEED robots.txt
 	NEED CPAN/index.html
