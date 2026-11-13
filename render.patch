@@ -9,8 +9,7 @@
  
  
  my $cs = RdKw::I18N::CodeSets->new();
- eval { Encode::Locale::decode_argv(Encode::FB_CROAK()); 1 }
- 	or die "$0: cannot read the arguments in this locale\n";
+@@ -122,8 +124,13 @@
  my %v = (
  	D => $D,
  	O => $O,
@@ -19,7 +18,8 @@
 +	get_version => \&get_version,
  	location => $target,
 +	rewrite => sub {
-+		die Template::Exception->new(permanent => "Directly calling rewrite is obsolete. use locate's relative form.");
++		@_ == 1 or die Template::Exception->new(usage => "[% rewrite PATH %]");
++		goto &rewrite;
 +	},
  );
  
