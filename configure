@@ -166,8 +166,8 @@ sub isnull
 	!(defined $_[0]) || !(length $_[0]);
 }
 
-# *** help: [ flag, description, default ]
-# The default is deferred for some reason.
+# Help text: [ flag, description, default ]
+# The default is deferred in a lambda for some reason.
 our @VARHELP = (
 	[ '-DA', N__('Project root, seen from current directory'), sub { $Dd{A} } ],
 	[ '-DB', N__('Build directory, seen from the source tree'), sub { $Dd{B} } ],
@@ -358,7 +358,7 @@ foreach my $f ([ config => \%D ], [ option => \%O ]) {
 	my ($name, $H) = @$f;
 	my $what = write_make("MY/$name.mk", $H, $prog);
 	$what and print STDERR $cs->diag(
-		$what > 1 ? __("Writing %q") : __("Updating %q"),
+		$what > 1 ? __("Writing %#q") : __("Updating %#q"),
 		"MY/$name.mk"), "\n" unless $shutup;
 }
 
