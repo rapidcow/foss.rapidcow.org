@@ -23,7 +23,15 @@
  );
  
  #
-@@ -175,3 +181,44 @@
+@@ -165,6 +171,7 @@
+ 	DEFINITION => $D,
+ 	ENCODING => 'UTF-8',
+ 	INCLUDE_PATH => [ '.', $D->{a} ],
++	CHECK_DEPS => 1,
+ })
+ 	or die "[TT] ", RdKw::WwW::GenGenLib::Template::Provider->error(), "\n";
+ my $tt = Template->new({ LOAD_TEMPLATES => [ $provider ] })
+@@ -175,3 +182,44 @@
  	or die "[TT] ", $tt->error(), "\n";
  
  exit 0;  # goodbye!
