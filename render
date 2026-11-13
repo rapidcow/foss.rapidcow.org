@@ -28,46 +28,57 @@
 # More information about Template Toolkit here:
 # https://template-toolkit.org/
 #
+use utf8;
 use 5.008;
 use strict;
 use warnings;
 
 use Encode ();
-use Encode::Locale ();
-use PerlIO::encoding ();
+use RdKw::I18N::CodeSets ();
+use RdKw::L10N::TextDomain ':module' => 'RdKw::WwW::SiteConf::L10N';
 
-# Use locale encoding for wide-characters, since console
-# output/error is often meant for humans and not machine-
-# consumable.  Fall back to ASCII \x{...} when a Unicode
-# character cannot be encoded, however.
-{
-	local $PerlIO::encoding::fallback = Encode::PERLQQ();
-	binmode STDOUT, ':encoding(console_out)';
-	binmode STDERR, ':encoding(console_out)';
-}
-
-use Getopt::Std;
+use Getopt::Long qw( GetOptions );
 use RdKw::WwW::GenGenLib 0.0100 qw(
 	read_deps load_state
-	norm_dep subs_dep uproot to_fs );
+	norm_dep subs_dep uproot );
 use RdKw::WwW::GenLib 0.0203 qw( locate );
 use Template;
 use RdKw::WwW::GenGenLib::Template::Provider;
 use Digest::SHA;
 use File::Spec;
 
-eval { Encode::Locale::decode_argv(Encode::FB_CROAK()); 1 }
-	or die "$0: cannot read the arguments in this locale\n";
-my %o;
-getopts('B:', \%o) or die "usage: $0 [-B BUILDDIR] apath bpath\n";
-my $B = defined $o{B} ? $o{B} : '.';
-@ARGV == 2 or die "$0: need exactly two args\n";
+
+my $cs = RdKw::I18N::CodeSets->new();
+# Command-line arguments are decoded via the
+# argv codeset, though this may be altered by
+# the SITECONF_CODESETS and -C flags, so we
+# must parse them now.
+$cs->parse_from_env('SITECONF_CODESETS', prog => $0);
+my $offset = $cs->parse_from_argv(\@ARGV, prog => $0);
+
+# Parsing is complete; we can publish them for
+# everyone else.
+RdKw::I18N::CodeSets->locale($cs);
+$cs->initstd(stderr => Encode::FB_PERLQQ());
+my $prog = $cs->un_argv($0, { check => Encode::FB_PERLQQ(), prog => $0 });
+@ARGV = $cs->un_argv(@ARGV, { start => 1 + $offset, prog => $prog });
+
+Getopt::Long::Configure(qw( bundling no_ignore_case ));
+my $B = '.';
+GetOptions(
+	'B=s' => \$B,
+	# Reject misplaced -C arguments
+	'C:s' => sub { die $cs->diag("%#q: %s\n", $prog, __("too late to -C now.")); },
+)
+# The usage may be altered, so we only translate the "usage:" part.
+	or die $cs->diag(__("usage: %s"), $cs->diag("%#q %s\n",
+		$prog => '[-B dir] apath bpath'));
+# HEY!  The usage is `./render apath bpath', which is two arguments.
+@ARGV == 2 or die "$prog: " . __("need exactly two arguments") . "\n";
 my ($apath, $bpath) = @ARGV;
 
-#
-# Load configuration parameters and build options, so
-# we can expose them to the template.
-#
+# Load configuration parameters and build options,
+# so we can expose them to the template.
 my %S = load_state($B);
 my ($D, $O) = @S{qw( config option )};
 
@@ -78,7 +89,7 @@ my ($D, $O) = @S{qw( config option )};
 # as a predefined constant (like how ${A} is).
 #
 my %I = read_deps($apath);
-defined $I{HAVE} or die "E: $apath: HAVE declaration not found\n";
+defined $I{HAVE} or die "E: " . $cs->diag(__("%q: HAVE declaration not found"), $apath) . "\n";
 # relapath doesn't do well with the leading slash,
 # though people may have a habit of including it...
 (my $target = do {
@@ -96,9 +107,13 @@ defined $I{HAVE} or die "E: $apath: HAVE declaration not found\n";
 		$name;
 	}
 	else {
-		die "E: $apath: Your HAVE `$I{HAVE}'"
-			. ($real eq $I{HAVE} ? "" : " (aka `$real')")
-			. " is not under \${a} (aka `$D->{a}')\n";
+		die "E: " . ($real ne $I{HAVE}
+			# HEY!  The first %q is the symbolic form, and
+			# (aka %q) is expanded form.
+			? $cs->diag(__('%q: Your HAVE %q (aka %q) is not under ${a} (aka %q)'),
+				$apath, $I{HAVE}, $real, $D->{a})
+			: $cs->diag(__('%q: Your HAVE %q is not under ${a} (aka %q)'),
+				$apath, $I{HAVE}, $D->{a})) . "\n";
 	}
 }) =~ s/\A\/+//;
 
@@ -113,7 +128,8 @@ my %v = (
 	get_version => \&get_version,
 	location => $target,
 	rewrite => sub {
-		die Template::Exception->new(permanent => "Directly calling rewrite is obsolete. use locate's relative form.");
+		@_ == 1 or die Template::Exception->new(usage => "[% rewrite PATH %]");
+		goto &rewrite;
 	},
 );
 
@@ -161,7 +177,7 @@ my $provider = RdKw::WwW::GenGenLib::Template::Provider->new({
 my $tt = Template->new({ LOAD_TEMPLATES => [ $provider ] })
 	or die "[TT] ", $Template::ERROR, "\n";
 
-$tt->process($apath, \%v, to_fs($bpath, 'E'),
+$tt->process($apath, \%v, $cs->to_fs($bpath, { prog => 'E' }),
 	{ binmode => ':encoding(UTF-8)' })
 	or die "[TT] ", $tt->error(), "\n";
 
