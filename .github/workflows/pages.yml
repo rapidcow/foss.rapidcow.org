@@ -69,8 +69,13 @@ jobs:
         run: |
           ./configure -Db=docs
           siteconf -g
-          make
+          make docs
           find docs -name .ok -delete
+
+      # Refuse to deploy anything other than what was built (and
+      # recorded with ./checksum) before pushing.
+      - name: Verify checksum
+        run: ./checksum -c
 
       - uses: actions/upload-pages-artifact@v3
         with:
