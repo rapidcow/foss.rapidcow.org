@@ -132,7 +132,7 @@ fi
 echo "$0: ${tarball}: FAILED" >&2
 echo "  recorded: ${want}" >&2
 echo "  built:    ${have}" >&2
-if diff -u "${sums}" "${tmp}/sums" >&2
+if diff "${sums}" "${tmp}/sums" >&2
 then
 	echo "(the recorded files all match)" >&2
 fi
