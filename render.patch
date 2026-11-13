@@ -30,8 +30,8 @@
 +	CHECK_DEPS => 1,
  })
  	or die "[TT] ", RdKw::WwW::GenGenLib::Template::Provider->error(), "\n";
- my $tt = Template->new({ LOAD_TEMPLATES => [ $provider ] })
-@@ -175,3 +182,44 @@
+ my $tt = Template->new({
+@@ -177,3 +184,44 @@
  	or die "[TT] ", $tt->error(), "\n";
  
  exit 0;  # goodbye!

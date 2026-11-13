@@ -174,7 +174,9 @@ my $provider = RdKw::WwW::GenGenLib::Template::Provider->new({
 	CHECK_DEPS => 1,
 })
 	or die "[TT] ", RdKw::WwW::GenGenLib::Template::Provider->error(), "\n";
-my $tt = Template->new({ LOAD_TEMPLATES => [ $provider ] })
+my $tt = Template->new({
+	LOAD_TEMPLATES => [ $provider ],
+})
 	or die "[TT] ", $Template::ERROR, "\n";
 
 $tt->process($apath, \%v, $cs->to_fs($bpath, { prog => 'E' }),
