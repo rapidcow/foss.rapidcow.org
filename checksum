@@ -49,7 +49,7 @@ die()
 	exit 2
 }
 
-[ -f "${manifest}" ] || die "${manifest}: not there (configure, then siteconf -g)"
+[ -f "${manifest}" ] || die "${manifest}: not there; build it first"
 
 # It is GNU tar we want, whatever it is called here.
 tar=
