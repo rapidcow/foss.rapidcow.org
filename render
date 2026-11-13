@@ -212,7 +212,7 @@ sub get_version
 		($path, $error) = $provider->access($path);
 		defined $error and die "Access denied: $error\n";
 		defined $path or die "File `$name'$aka not found\n";
-		open my $fh, '<:raw', to_fs($path, 'get_version')
+		open my $fh, '<:raw', $cs->to_fs($path, { prog => 'get_version' })
 			or die "open `$path' (aka `$name'): $!\n";
 		my $digest = Digest::SHA->new(1);
 		$digest->addfile($fh);
