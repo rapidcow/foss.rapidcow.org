@@ -1,0 +1,496 @@
+[%
+ # vim:filetype=tt2html
+ # HAVE: project/siteconf/what-is-siteconf.html
+-%]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>siteconf: what is siteconf?</title>
+[% INCLUDE snip/simple.css -%]
+</head>
+<body>
+<nav>
+  <p>[<a href="[% locate('./index.html') | xml %]">up!</a>]</p>
+</nav>
+<main>
+  <p>Thank you to the two kind people who let me present this
+  thing to them, even if it will not be running for prize in
+  <a href="https://madhacks-fall-2026.devpost.com/">MadHacks 2026</a>
+  (I mean why would it be fair?  It’s <q>pre-written code</q>,
+  it is vibe coded (the core of <b>siteconf</b>(1) itself at
+  least, which is a <em>much</em> more powerful extension
+  to the configure script I wrote by hand for www-cellar),
+  and the idea is even older than that.
+  I was only mislead by some of the UPL folks (the
+  organizers running this event) as well as a notable
+  <em>past</em> organizer that were taking it way to
+  chill about this and said I should try making
+  <em>something</em> about it&hellip; when yeah, the
+  rules don’t call for that. 😬</p><p><small>(I also have an essay
+  that I have received generous extensions on to write,
+  so that nullifies the chances of me investing my time
+  into even a rewrite of my Git shell (I have written
+  it in my bedroom and <em>know</em> it does not cost
+  an all-nighter to do it.)  I also really need siteconf
+  to not suck &mdash; badly &mdash; so I can finally
+  revive my blog and start making art!!! &gt;n&lt;;)</small>
+  </p>
+  <h1>what is siteconf?</h1>
+  <p>In the interest of most people’s time (and attention,
+  for something so utterly unattractive in the market of
+  real <abbr title="static site generator">SSG</abbr>s and
+  <abbr title="content management systems">CMS</abbr>es)
+  I will keep one quick (and inaccurate) and one slow (but
+  thorough) version.</p>
+  <p><b>The layman pitch (and un-pitch)</b>:
+  siteconf is a static-site generator.  it is:
+  <ul>
+    <li><b>fast</b>: it is said to be an <em>incremental</em>
+      generator, meaning the sources you touch only affect
+      the components that depend on it.  siteconf supports
+      the conventional setup of templates, such as the perl
+      Template Toolkit, the python Jinja2 (and possibly ruby
+      slim and racket scribble, but i haven’t tested), so
+      that when you update the template, all files get the
+      new look!</li>
+    <li><b>predictable</b>: the recipe siteconf follows is
+      explicit and builds to the byte-exact identical file
+      (provided that the source files are intact and the
+      commands themselves are deterministic and side-effect
+      free).</li>
+    <li><b>configurable</b>: with the locate function that
+      comes with <code>-P web</code> it is possible to create
+      templates that refer to static assets (such as CSS) as
+      an absolute location but resolve relatively to the page’s
+      location.  so migration from a whole domain to a Unix-y
+      <code>~tilde</code> subpath and/or <code>file://</code
+      >-respecting sites are explicitly supported. :)  (With a
+      bit of patchwork you can have it conditionally strip
+      the <code>.html</code> suffix when the <code>-Osite_url</code>
+      schema is (refer to <a href="https://github.com/rapidcow/foss.rapidcow.org/blob/gh-pages/render.patch">us</a> as an
+      example!))</li>
+    <li><b>lazy</b>: soft manifest entries and dependencies
+      allow you to build only a portion of your site without
+      heavy media files.</li>
+    <li><b>all text</b> and <b>stateless</b>: no stinky
+      binary cache.  what you see is ALL you get.</li>
+    <li><b>all yours!</b> depending on the templating
+      language you use down to the spacing between
+      <code>&lt;div&gt;</code> tags &mdash; that means of
+      course, an abysmal lack of branding.  (any amount of
+      branding would be wrong anyways for technical reasons
+      I won’t elaborate here, but should become obvious if
+      you spend some time thinking about how it works.)</li>
+  </ul>
+  <p>Don’t get too excited though because:</p>
+  <ul>
+    <li><b>you need to bring your own recipe</b>: opt into
+      Template Toolkit with <code>-P web</code>, but
+      otherwise it is assumed you will bring your own.
+      <ul><li>adding to specify that if you decide to
+      <em>not</em> use Template Toolkit, or anything perl
+      for that matter, you need to patch the script to
+      perform version checks yourself; do it in a different
+      script in a language of your choice; or just accept
+      that we can’t (and won’t) do it here. :(</li>
+      </ul>
+    </li>
+    <li><b>you need to name every file and every rule</b>:
+      you need to name every file you want to make, and for
+      each of them, the rule to make them.  if things get
+      too tedious you can (and should) generate these files,
+      but siteconf provides <em>no</em> mechanism for
+      <q>build everything in this directory</q>.  i give
+      you the choice, which also means the responsibility,
+      to decide when and how to do it.</li>
+    <li><b>you (likely) need to assemble your own pipeline</b>:
+      if anything you make is any more complicated than
+      <code>./configure &amp;&amp; siteconf -g &amp;&amp;
+      make</code>, you are expected to make your life
+      easier by writing a wrapper script for it.
+      (scripts are awesome though!  if you just want to
+      get something up and running though, consider real
+      SSGs like Gatsby/Hugo/Jekyll (or as i have been told
+      repeatedly by someone, Astra) or real CMSes like
+      Wordpress.)</li>
+    <li><b>you (very likely) need a unix-like environment</b>.
+      I myself am not a Windows user; and while i have
+      reasons to believe a lot of the things are broken
+      on Windows, i prefer not to try fixing them any
+      time soon.  You may consider <abbr title="Windows subsystem for Linux">WSL</abbr>.</li>
+  </ul>
+  <p><b>The technical pitch</b>: siteconf is a build
+    script generator; a POSIX Makefile generator,
+    specifically (though it also supports GNU Make
+    for weird space-ful paths; and Ninja just because
+    Claude can lol.)  siteconf is a command like make
+    and uses tar-style single-letter flags to switch
+    between <em>modes</em>. <ul><li><code>siteconf -i</code>
+    initializes a script named <code>./configure</code>;
+    it is typically done at the project root (though
+    you could set <code>-SA</code> if it lives elsewhere).</li>
+    <li><code>./configure</code> then writes your configuration
+    variables (such as <code>-DA -DB -Da -Db -Dc -De -DF -DR</code>)
+    to <b>MY/config.mk</b> and options (such as <code>-Obase_url
+    -Osite_url</code>) to <b>MY/option.mk</b> relative to the
+    build directory.</li>  <li><code>siteconf -g</code> then
+    generates the build script based on these variables and
+    options, follows them to the <em>manifest</em> (<code>-DF</code>,
+    which defaults to <code>MANIFEST</code>) and the <em>rulebook</em>
+    (<code>-DR</code>, which defaults to <code>Makefile.in</code>),
+    then expands all variables and implicit prerequisites and
+    writes a Makefile.</li> </ul>
+  </p>
+  <p>then you run <code>make</code>, and the site
+  builds.  that’s all!</p>
+  <p>a few more cool things that may not appeal to most people,
+  but putting them here for the lack of a better section anyways:</p>
+  <ul> <li><b>out-of-tree build support</b>: siteconf can work on
+  read-only checkouts by passing a desired writable build directory
+  as <code>-DB</code> to it. </li> <li><b>foreign configure
+  support</b>: as mentioned before, <code>-SA</code> (at
+  <code>siteconf -i</code> time) or <code>-DA</code> can
+  point to an arbitrary alternative project root (it’s
+  particularly handy if you just want to <q>try out</q>
+  siteconf, or if you are prescribing build instructions
+  for someone else’s project with sources lying about);
+  similarly, <code>-Sa -Da</code> can point arbitrary
+  source directories.</li>
+  </li> <li><b>gettext support</b>: there is a Chinese (simplified)
+  translation as a proof of concept, albeit with AI artifacts.</li>
+  <li><b>Unicode support</b>: since version 0.03 siteconf is
+  locale-aware.  this version reeks of AI stink to this day,
+  so don’t get too excited.</li>
+  <li> <b>protection against directory traversal</b>: the classic
+  Unix shell horror of <code>${nonexistent}/etc/passwd</code>
+  does not work here since variable substitutions on full
+  path segments are specially treated as path concatenation
+  (calls <code>uproot</code> with an empty file segment,
+  to be exact.)  upward relative paths (i.e. consecutive
+  runs of <code>../</code>) are allowed but <em>only</em>
+  when they are written as that literally in Makefile.in
+  <em>or</em> it is explicitly configured via <code>-Dvar</code>
+  (or a default); so <code>${root}/../secret.txt</code> (or
+  anything clever that expands to it like
+  <code>${root}/${A}${A}/secret.txt</code>) will never
+  escape <code>${root}</code>).  provided that you review
+  the Makefile.in carefully for any explicitly named
+  absolute/relative paths and set <code>-D</code> on
+  the directories you are okay with being read, siteconf
+  should not read anything beyond that.</li>
+  <li> <b>dependency headers for all!</b>
+  siteconf (GenGenLib) understands (and expects) a whole
+  ton of programming language’s comment characters.
+  (for you see, I am a fan of programming languages&hellip; ;.) </li>
+  </ul>
+  <h1>history of siteconf</h1>
+  <p>To further disqualify myself from the hackathon:</p>
+  <p>The siteconf <em>repository</em> was created on October 30.
+  It was when I wanted to port the static-site generator from
+  www-cellar into the Javadoc site for <a href="[% locate('project/trivnote/index.html') | xml %]">trivnote</a>,
+  after Claude has created sufficient scaffolding for a
+  Javadoc version navigator.</p>
+  <p>www-cellar was written on August 7, in an
+  all-nighter grandparent’s house where i was staying
+  over to clear out my childhood belongings; in the
+  initial commit i wrote (which i knew was cringe, but
+  for the sake of history&hellip;):</p>
+<pre><code>
+[%#
+
+commit 431e64aa6f62ff10e6f9a191bc0d6aab20e12ec3
+Author: Ethan Meng <rapidcow@RCs-T480s.local>
+Date:   Fri Aug 7 06:20:39 2026 +0800
+
+
+-%]
+[% FILTER html -%]
+    a heart on a verge of collapse; rubbles
+    surround the ruins of the colossal tower.
+
+    from cities all over the world, to places alike;
+    the pristine white rooms, devoid of memories.
+
+    the inconceievable place that was supposedly
+    home, sealed in dust, evicted by time.
+
+    my things that kept getting tossed out as garbage:
+    wondering in limbo, no place to call home...
+
+    so now i lean, disheveled, against boxes
+    of remnants scrambled across the floor, of
+    pieces of memories for a life that once was,
+    in the attic of stagnant transient dreams;
+    hoping plainly to keep what's left to myself.
+[% END -%]
+</code></pre>
+  <p><small>(Something similarly cringe lives on
+  www.rapidcow.org right now, but I won’t tell you
+  where :P)</small></p>
+  <p>www-cellar’s <b>configure</b> was a lot more
+  monolithic; it actually did what the current
+  <code>./configure</code> (writing <b>MY/*.mk</b>)
+  and <code>siteconf -g</code> (writing <b>Makefile</b>)
+  does in one pass.  Its manifest looks a bit different,
+  but Makefile.in stayed impressively the same:
+<pre><code>[% FILTER html -%]
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000..c6b3bf9
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1,3 @@
++Makefile
++MY/
++site/
+diff --git a/MANIFEST b/MANIFEST
+new file mode 100644
+index 0000000..93a4986
+--- /dev/null
++++ b/MANIFEST
+@@ -0,0 +1,4 @@
++index.html     home page of http://cellar.rapidcow.org
++archive/backup/index.html      home page for arbak
++archive/documents/index.html   home page for ardoc
++archive/media/index.html       home page for media
+diff --git a/Makefile.in b/Makefile.in
+new file mode 100644
+index 0000000..ba00d25
+--- /dev/null
++++ b/Makefile.in
+@@ -0,0 +1,5 @@
++#
++# Transformation rules from ${a}/% to ${b}/%
++#
++index.html archive/backup/index.html archive/documents/index.html archive/media/index.html: render
++	${^X} render $a/${.TARGET} $b/${.TARGET}
+[% END -%]
+</code></pre>
+  <p>(Well, <em>almost</em> &mdash; the target would have to
+  be <code>${B}/${b}/${.TARGET}</code>, and you have to chdir
+  to <code>${A}</code> for out-of-tree builds.)</p>
+  <p>www-cellar borrows concepts from the cooper-www
+  project/experiment, which similarly had a <b>configure</b>
+  file, but lacked a way to modify the dependency graph
+  without modifying the source code.  It was GNU automake’s
+  <b>Makefile.am</b> that inspired Makefile.in, and FreeBSD’s
+  <b>rcorder</b>(8) header that inspired dependency headers
+  for www-cellar.  (The <code>${.TARGET}</code> variable
+  comes from Berkeley make, which is a modern re-spelling
+  of the variable <code>$@</code> from the original Make
+  written by Stuart Feldman at Bell Labs.)</p>
+  <p>cooper-www began as an effort to properly represent my
+  brother’s personality as he was attending a weird AI class
+  our mom had signed up for that had them AI-generate personal
+  websites (about <em>kids</em>?!  that I think is utterly
+  invasive.  But either way&hellip;)  It began on June 1 of
+  <em>last year</em> (so 2025; and indeed also precedes last
+  year’s MadHacks.)  The beginning of cooper-www’s <b>configure</b>(1)
+  manual page reads:</p>
+<pre><code>[% FILTER html -%]
+=pod
+
+=encoding UTF-8
+
+=begin head
+
+Date    2025-06-28
+Section 1 Scripts for the Cooper Web Project
+Version 7.878
+
+=end head
+
+=head1 NAME
+
+./configure - MY/env generator
+
+=head1 SYNOPSIS
+
+    # Local web
+    ./configure SITE_URL=file://                          \
+      BASE_URL="$PWD/public/static/                       \
+      FILE_URL=file:///"$(realpath ../*drv/public/*www)/" \
+      REWRITE_URL=1
+
+    # World-wide web
+    ./configure SITE_URL=https://www.rapidcow.org         \
+      BASE_URL=/~cooper/                                  \
+      FILE_URL=https://ftp.rapidcow.org/???/
+
+=head1 RATIONALE
+
+The B<configure> script is traditionally used to configure a Unix
+program in preparation for installing it to a target system
+environment.  With the heart that a web site should not be
+confined to one or two rented domains on the Internet, this
+configure script is very much like that, in that it lets you
+configure variables such as the site URL, file storage CDN URL,
+so that the internal and external hyper-links would work.
+[% END -%]
+</code></pre>
+  <p>The entire file of Makefile-generation is this:</p>
+<pre><code>[% FILTER html -%]
+#!/usr/bin/env perl
+
+use 5.010;
+use strict;
+use warnings;
+use File::Find;
+
+my $mkpub = 'gen/mkpub';
+# Dependencies of mkpub
+my @mkpub = ($mkpub, 'MY/env', 'gen/lib/Local/WWW/Cooper.pm');
+
+sub quote_make {
+	my @ret = map { s' '\ '; s'\$'$$'; $_ } @_;
+	wantarray ? @ret : $ret[0];
+}
+
+sub quote_sh {
+	my @ret = map { s/'/'"'"'/; "'$_'" } @_;
+	wantarray ? @ret : $ret[0];
+}
+
+sub map_src { my $name = shift; "src/$name" }
+sub map_pub { my $name = shift; "public/static/$name" }
+
+sub updir {
+	my $path = shift;
+	my $rpos = length $path;
+	my $lpos = $rpos;
+	while (($lpos = rindex ($path, '/', $lpos)) != -1) {
+		last if $rpos - $lpos > 1;
+		$rpos = $lpos;
+		$lpos = $lpos - 1;
+	}
+	return if $lpos < 0;
+	substr ($path, 0, $lpos);
+}
+
+sub make_makefile {
+	my $makefile_path = shift;
+	my $what_about_it = shift;
+
+	my @publics;
+	my %knowdir;
+	open my $file, '>', $makefile_path or die "open $makefile_path: $!\n";
+
+	print $file <<HEAD;
+# ${makefile_path}${what_about_it}
+# NOTE: I am a file generated by $0.
+# NOTE: You do not want to edit me directly.
+
+# This allows Make to be run noisily on-demand
+# by setting NOECHO to an empty value.
+NOECHO = @
+HEAD
+
+	my $prefix = "\nall: ";
+	find (sub {
+		-f or return;
+		my $target = map_pub($_);
+		print $file $prefix, quote_make($target);
+		$prefix = " \\\n\t";
+	}, 'src');
+	print $file "\n";
+
+	find (sub {
+		-f or return;
+		my $source = map_src($_);
+		my $target = map_pub($_);
+
+		my $parent = $target;
+		my @parent;
+		while ($parent = updir($parent)) {
+			my $exists = "$parent/.exists";
+			push @parent, $exists;
+			unless ($knowdir{$parent}++) {
+				print $file <<MKDIR;
+
+@{[quote_make($exists)]}:
+	install -m 755 -d @{[quote_sh($parent)]}
+	\${NOECHO} touch @{[quote_sh($exists)]}
+MKDIR
+			}
+		}
+
+		# Only HTML warrants processing at the moment
+		my $cmd;
+		if (/\.html/) {
+			unshift @parent, @mkpub;
+			$cmd = $mkpub;
+		}
+		else {
+			$cmd = 'install';
+		}
+
+		{
+			local $" = " ";
+			my $target_mk = quote_make($target);
+			my $source_mk = quote_make($source);
+			print $file <<MKPUB;
+
+$target: @{[quote_make($source, @parent)]}
+	$cmd -m 644 @{[quote_sh($source)]} @{[quote_sh($target)]}
+MKPUB
+		}
+	}, 'src');
+
+	close $file;
+}
+
+make_makefile 'Makefile.public' => ' - make(1) rules for public/static';
+[% END -%]
+</code></pre>
+  <p>This could not be more obvious but this, in turn,
+  was inspired by <abbr title="ExtUtil::MakeMaker">EU::MM</abbr>’s <b>WriteMakefile</b>.</p>
+  <p>I would like also to emphasize that cooper-www was not
+  <em>just</em> an experiment for siteconf; it gave birth to
+  ideas such as relative path computation in GenLib.pm
+  (which can be used independently of SiteConf.pm).</p>
+  <p>None of the code in the cooper-www nor the www-cellar
+  prototype was AI-generated; but then again, none of them
+  were written exclusively during the hackathon either. (:
+  On the other hand, siteconf was almost <em>entirely</em>
+  AI-generated, but the <em>ideas</em> behind it were human,
+  and arose from my experiments, BSD Make, <b>rcorder</b>(8)
+  headers, GNU autoconf and automake, and the original
+  Unix Make.  Now while I do not find it unreasonable for
+  this to be disqualified from the hackathon, I would also
+  like to argue that building things from old pieces is the
+  norm, not the exception.  A good idea takes a while to
+  develop; and a good abstraction comes from tried uses.
+  There is something I don’t understand about the appeal of
+  the ephemeral nature of hackathons that frankly, I may
+  never understand.  But to me, good things take a while to
+  develop and take shape, and often take inspiration from
+  great designs in the past.  In that respect I cannot possibly
+  claim siteconf to be this one thing I brainstormed and came
+  up with this afternoon; but rather it was shaped from my
+  needs for flexibly, predictably, and deterministically
+  building my web sites over the three years I have been
+  trying to make one; and it’d be simply distasteful to apply
+  myself to fitness for an award for the feign originality,
+  for I could not bear the remorse I would otherwise feel
+  for leaving out the Unix/GNU/BSD predecessors that
+  inspired me and claiming them all as my own.</p>
+  <p>I cannot compete.  Now leave me alone to build my
+  web sites&hellip;</p>
+  <h2>about names</h2>
+  <p>It's obvious enough where <b>configure</b> and
+  <b>Makefile.in</b> come from and, to a lesser extent,
+  where <b>MY</b> came from (it is EU::MM and perl, I
+  will tell you that.)  siteconf is genuinely a new name
+  that, I can’t quite recall where but, it was perhaps
+  GPT web when I typed my desire to separate the generation
+  step from the configure step, then when it meant
+  a whole rewrite I wanted to rewrite it for good so
+  I asked in frustration for the lack of a good name.
+  GPT suggested siteconf, possibly as a concatenation of
+  the <b>site/</b> directory of www-cellar, and shortening
+  of <q>conf</q> as seen in <b>autoconf</b>(1).  Then the
+  rest is history&hellip;.
+</main>
+</body>

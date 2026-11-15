@@ -24,6 +24,7 @@ MAKE docs
 	NEED    project/archive/bridge/tophatch/concepts/index.html
 	NEED project/perspective/index.html
 	NEED project/siteconf/index.html
+	NEED    project/siteconf/what-is-siteconf.html
 	NEED project/trivnote/index.html
 	NEED    project/trivnote/ai.html
 	NEED    project/trivnote/help.html

@@ -26,6 +26,7 @@ project/archive/index.html \
 	project/archive/bridge/tophatch/concepts/index.html \
 project/perspective/index.html \
 project/siteconf/index.html \
+	project/siteconf/what-is-siteconf.html \
 project/trivnote/index.html \
 	project/trivnote/ai.html \
 	project/trivnote/help.html: render

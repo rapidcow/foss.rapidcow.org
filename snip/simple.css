@@ -1,0 +1,7 @@
+[%# vim: set filetype=tt2: -%]
+[%# Shamelessly ripped from GPT's lib/python3/lib*/index.html. -%]
+  <style>
+    :root { color-scheme: light dark; }
+    body { max-width: 68ch; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; }
+    code { overflow-wrap: anywhere; }
+  </style>

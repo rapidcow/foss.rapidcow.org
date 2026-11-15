@@ -183,6 +183,12 @@ $tt->process($apath, \%v, $cs->to_fs($bpath, { prog => 'E' }),
 
 exit 0;  # goodbye!
 
+# somebody told me i can't be saying christmas
+# because it wasn't christmas when i wrote this
+# >:(  well i say christmas is a state of the
+# mind rather than a time of the year!  (i am
+# baseless in a debate i will never win in.
+# please help)
 sub rewrite
 {
 	my ($christmas) = @_;
@@ -190,10 +196,14 @@ sub rewrite
 		s{([^/]+)\.html$}
 		 {( $1 eq "index" ? "" : $1 )}eig
 		if $O->{site_url} =~ m{^https?://}i;
+
+		# If that matched the whole string,
+		# we are going to ".".
+		$_ = '.' if !length;
 	}
-	# merry
+	# all i want for
 		$christmas;
-			# ?
+			# is ?
 }
 
 # Version the built bytes of a declared resource (NEED it in the header):
