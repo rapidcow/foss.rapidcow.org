@@ -1,5 +1,5 @@
---- a/render
-+++ b/render
+--- render.new	2026-11-15 06:06:35
++++ render	2026-11-15 06:07:52
 @@ -44,6 +44,8 @@
  use RdKw::WwW::GenLib 0.0203 qw( locate );
  use Template;
@@ -24,11 +24,17 @@
  );
  
  #
-@@ -175,3 +182,44 @@
+@@ -177,3 +184,54 @@
  	or die "[TT] ", $tt->error(), "\n";
  
  exit 0;  # goodbye!
 +
++# somebody told me i can't be saying christmas
++# because it wasn't christmas when i wrote this
++# >:(  well i say christmas is a state of the
++# mind rather than a time of the year!  (i am
++# baseless in a debate i will never win in.
++# please help)
 +sub rewrite
 +{
 +	my ($christmas) = @_;
@@ -36,10 +42,14 @@
 +		s{([^/]+)\.html$}
 +		 {( $1 eq "index" ? "" : $1 )}eig
 +		if $O->{site_url} =~ m{^https?://}i;
++
++		# If that matched the whole string,
++		# we are going to ".".
++		$_ = '.' if !length;
 +	}
-+	# merry
++	# all i want for
 +		$christmas;
-+			# ?
++			# is ?
 +}
 +
 +# Version the built bytes of a declared resource (NEED it in the header):
