@@ -1,5 +1,5 @@
---- render.new	2026-11-15 06:06:35
-+++ render	2026-11-15 06:07:52
+--- a/render
++++ b/render
 @@ -44,6 +44,8 @@
  use RdKw::WwW::GenLib 0.0203 qw( locate );
  use Template;
@@ -9,7 +9,7 @@
  
  
  my $cs = RdKw::I18N::CodeSets->new();
-@@ -122,8 +124,13 @@
+@@ -122,8 +124,12 @@
  my %v = (
  	D => $D,
  	O => $O,
@@ -18,12 +18,19 @@
 +	get_version => \&get_version,
  	location => $target,
 +	rewrite => sub {
-+		@_ == 1 or die Template::Exception->new(usage => "[% rewrite PATH %]");
-+		goto &rewrite;
++		die Template::Exception->new(permanent => "Directly calling rewrite is obsolete. use locate's relative form.");
 +	},
  );
  
  #
+@@ -165,6 +171,7 @@
+ 	DEFINITION => $D,
+ 	ENCODING => 'UTF-8',
+ 	INCLUDE_PATH => [ '.', $D->{a} ],
++	CHECK_DEPS => 1,
+ })
+ 	or die "[TT] ", RdKw::WwW::GenGenLib::Template::Provider->error(), "\n";
+ my $tt = Template->new({
 @@ -177,3 +184,54 @@
  	or die "[TT] ", $tt->error(), "\n";
  
