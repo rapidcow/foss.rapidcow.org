@@ -47,7 +47,6 @@ use RdKw::WwW::GenGenLib::Template::Provider;
 use Digest::SHA;
 use File::Spec;
 
-
 my $cs = RdKw::I18N::CodeSets->locale;
 # Command-line arguments are decoded via the
 # argv codeset, though this may be altered by
