@@ -48,17 +48,15 @@ use Digest::SHA;
 use File::Spec;
 
 
-my $cs = RdKw::I18N::CodeSets->new();
+my $cs = RdKw::I18N::CodeSets->locale;
 # Command-line arguments are decoded via the
 # argv codeset, though this may be altered by
 # the SITECONF_CODESETS and -C flags, so we
-# must parse them now.
+# must parse them now (into the process's own,
+# which everyone else gets from ->locale).
 $cs->parse_from_env('SITECONF_CODESETS', prog => $0);
 my $offset = $cs->parse_from_argv(\@ARGV, prog => $0);
 
-# Parsing is complete; we can publish them for
-# everyone else.
-RdKw::I18N::CodeSets->locale($cs);
 $cs->initstd(stderr => Encode::FB_PERLQQ());
 my $prog = $cs->un_argv($0, { check => Encode::FB_PERLQQ(), prog => $0 });
 @ARGV = $cs->un_argv(@ARGV, { start => 1 + $offset, prog => $prog });
@@ -89,7 +87,8 @@ my ($D, $O) = @S{qw( config option )};
 # as a predefined constant (like how ${A} is).
 #
 my %I = read_deps($apath);
-defined $I{HAVE} or die tagmsg(E => $cs->diag(__("%q: HAVE declaration not found"), $apath));
+defined $I{HAVE} or die $cs->tagmsg(E => $cs->diag(__(
+	"%q: HAVE declaration not found"), $apath));
 # relapath doesn't do well with the leading slash,
 # though people may have a habit of including it...
 (my $target = do {
@@ -107,12 +106,12 @@ defined $I{HAVE} or die tagmsg(E => $cs->diag(__("%q: HAVE declaration not found
 		$name;
 	}
 	else {
-		die tagmsg(E => $real ne $I{HAVE}
+		die $cs->tagmsg(E => $real ne $I{HAVE}
 			# HEY!  The first %q is the symbolic form, and
 			# (aka %q) is expanded form.
-			? $cs->diag(__('%q: Your HAVE %q (aka %q) is not under ${a} (aka %q)'),
+			? $cs->diag(__('%#q: Your HAVE %q (aka %q) is not under ${a} (aka %q)'),
 				$apath, $I{HAVE}, $real, $D->{a})
-			: $cs->diag(__('%q: Your HAVE %q is not under ${a} (aka %q)'),
+			: $cs->diag(__('%#q: Your HAVE %q is not under ${a} (aka %q)'),
 				$apath, $I{HAVE}, $D->{a}));
 	}
 }) =~ s/\A\/+//;
