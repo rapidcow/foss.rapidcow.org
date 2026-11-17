@@ -75,7 +75,7 @@ jobs:
       - name: Build
         run: |
           ./configure -Db=docs
-          siteconf -g
+          siteconf -gAt docs
           make docs
           find docs -name .ok -delete
 
