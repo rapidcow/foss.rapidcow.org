@@ -53,7 +53,7 @@ jobs:
       # so install Template Toolkit explicitly from CPAN.
       - name: Install Template Toolkit 3.102 from CPAN
         run: |
-          sudo cpanm --notest 'Template::Toolkit>=3.102'
+          sudo cpanm --notest Template::Toolkit~3.102
 
       - name: Install siteconf
         run: |
