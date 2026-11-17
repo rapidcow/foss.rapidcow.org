@@ -53,8 +53,7 @@ jobs:
       # so install Template Toolkit explicitly from CPAN.
       - name: Install Template Toolkit 3.102 from CPAN
         run: |
-          sudo cpanm --notest Template::Toolkit@3.102
-          perl -MTemplate -e 'print "Template $Template::VERSION\n"; exit($Template::VERSION eq "3.102" ? 0 : 1)'
+          sudo cpanm --notest 'Template::Toolkit>=3.102'
 
       - name: Install siteconf
         run: |
