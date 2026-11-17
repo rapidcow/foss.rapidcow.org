@@ -213,7 +213,7 @@ sub get_version
 	@_ == 1 or die Template::Exception->new(usage => "[% get_version(FILE) %]");
 	my ($name) = @_;
 	my $hash = eval {
-		my $path = File::Spec->canonpath(subs_dep($D, $name, strict => 1));
+		my $path = File::Spec->canonpath(subs_deps($D, $name, { strict => 1 }));
 		my $aka = ($name eq $path) ? "" : " (aka `$name')";
 		# (as it is, not looked for in INCLUDE_PATH)
 		my $error;
