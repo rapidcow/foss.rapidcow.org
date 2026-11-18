@@ -1,7 +1,7 @@
 --- a/render
 +++ b/render
-@@ -44,6 +44,8 @@
- use RdKw::WwW::GenLib 0.0203 qw( locate );
+@@ -46,6 +46,8 @@
+ use RdKw::WwW::GenLib 0.0300 qw( locate file2uri uri2file );
  use Template;
  use RdKw::WwW::GenGenLib::Template::Provider;
 +use Digest::SHA;
@@ -9,21 +9,25 @@
  
  my $cs = RdKw::I18N::CodeSets->locale;
  # Command-line arguments are decoded via the
-@@ -117,8 +119,12 @@
+@@ -121,11 +123,16 @@
  my %v = (
  	D => $D,
  	O => $O,
--	locate => sub { locate($O, $target, @_); },
-+	locate => sub { rewrite(locate($O, $target, @_)); },
+-	locate => sub { locate($O, $location, @_); },
++	locate => sub { rewrite(locate($O, $location, @_)); },
+ 	location => $location,
+ 	target => $target,
+ 	file2uri => \&file2uri,
+ 	uri2file => \&uri2file,
++	# our own
 +	get_version => \&get_version,
- 	location => $target,
 +	rewrite => sub {
 +		die Template::Exception->new(permanent => "Directly calling rewrite is obsolete. use locate's relative form.");
 +	},
  );
  
  #
-@@ -160,6 +166,7 @@
+@@ -167,6 +174,7 @@
  	DEFINITION => $D,
  	ENCODING => 'UTF-8',
  	INCLUDE_PATH => [ '.', $D->{a} ],
@@ -31,7 +35,7 @@
  })
  	or die "[TT] ", RdKw::WwW::GenGenLib::Template::Provider->error(), "\n";
  my $tt = Template->new({
-@@ -172,3 +179,54 @@
+@@ -179,3 +187,54 @@
  	or die "[TT] ", $tt->error(), "\n";
  
  exit 0;  # goodbye!

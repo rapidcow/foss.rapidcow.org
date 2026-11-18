@@ -20,10 +20,12 @@
 #
 # (Multiple files are okay!)
 #
-# GenLib is used solely for implementing [% locate PATH %].
-# If you prefer not to use it, simply remove the module
-# import line and exclude it from %v.  The script works
-# fine without it. ;)
+# GenLib is used solely for implementing [% locate PATH %]
+# (and, since GenLib 0.0300, for writing the location as a
+# URI path with file2uri).  If you prefer not to use it,
+# simply remove the module import line and exclude it from
+# %v (and set location to $target).  The script works fine
+# without it. ;)
 #
 # More information about Template Toolkit here:
 # https://template-toolkit.org/
@@ -41,7 +43,7 @@ use Getopt::Long qw( GetOptions );
 use RdKw::WwW::GenGenLib 0.0100 qw(
 	read_deps load_state
 	norm_deps subs_deps uproot );
-use RdKw::WwW::GenLib 0.0203 qw( locate );
+use RdKw::WwW::GenLib 0.0300 qw( locate file2uri uri2file );
 use Template;
 use RdKw::WwW::GenGenLib::Template::Provider;
 use Digest::SHA;
@@ -111,6 +113,8 @@ defined $I{HAVE} or die $cs->tagmsg(E => $cs->diag(__(
 			$apath, $I{HAVE}, $D->{a}));
 	}
 }) =~ s/\A\/+//;
+# $target is a file name; the page's location is its URI path.
+my $location = file2uri($target);
 
 #
 # Define Template variables (see also Template::Stash
@@ -119,9 +123,13 @@ defined $I{HAVE} or die $cs->tagmsg(E => $cs->diag(__(
 my %v = (
 	D => $D,
 	O => $O,
-	locate => sub { rewrite(locate($O, $target, @_)); },
+	locate => sub { rewrite(locate($O, $location, @_)); },
+	location => $location,
+	target => $target,
+	file2uri => \&file2uri,
+	uri2file => \&uri2file,
+	# our own
 	get_version => \&get_version,
-	location => $target,
 	rewrite => sub {
 		die Template::Exception->new(permanent => "Directly calling rewrite is obsolete. use locate's relative form.");
 	},
