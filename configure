@@ -60,7 +60,8 @@ BEGIN {
 # These dependencies are hints for `siteconf -i'.  You may
 # require a different version with `-MFoo=123', or remove it
 # with `-MFoo=', and those will be the effective dependency
-# of your configure script.
+# of your configure script.  (Since siteconf 0.03, you can
+# also use the more perl-ish `-M-Foo' to remove dependency.)
 #
 sub preset_finish
 {
@@ -193,7 +194,7 @@ our @FLAGHELP = (
 	[ '--mkpath', N__('Create non-leaf build directory components') ],
 );
 
-sub _section
+sub section
 {
 	my ($w, @row) = @_;
 	my $text = '';
@@ -225,11 +226,11 @@ $usage = do {
 	$cs->diag(__("usage: %s"), $cs->diag("%#q %s", $prog =>
 		  '[-C codeset ...] [-Dvar=val ...] [-Ovar=val ...] [--reset] [--mkpath] [-hq]'))
 	. "\n\n" . __("The following variables may be defined:") . "\n\n"
-	. _section($w, @VARHELP)
-	. (@OPTHELP ? "\n" . __("Options with defaults:") . "\n\n" . _section($w, @OPTHELP) : '')
+	. section($w, @VARHELP)
+	. (@OPTHELP ? "\n" . __("Options with defaults:") . "\n\n" . section($w, @OPTHELP) : '')
 	. "\n" . __("Anything else you may -D or -O goes into MY/config.mk or MY/option.mk\n"
 		. "respectively, for the rulebook or for the files being transformed.") . "\n"
-	. "\n" . _section($w, @FLAGHELP)
+	. "\n" . section($w, @FLAGHELP)
 	. "\n" . __("See also WwW::SiteConf::Configure.") . "\n";
 };
 
@@ -279,7 +280,7 @@ unless (-d to_fs($B)) {
 		}
 	} else {
 		mkdir to_fs($B) or $!{EEXIST}   # Forgive race condition...
-		or die $cs->tagmsg(E => $cs->diag($!{ENOENT}
+			or die $cs->tagmsg(E => $cs->diag($!{ENOENT}
 			# Provide a plausible explanation for ENOENT.
 			# There might be weirder cases with symlinks,
 			# but I'm not gonna investigate further lol.
@@ -342,8 +343,7 @@ File::Spec->file_name_is_absolute($D{b})
 # It is always defined since 0.02_01, though it is opt-in.
 isnull($D{c}) and $D{c} = !isnull($Dd{c}) && $Dd{c} ne $Dd{b} ? $Dd{c} : $D{b};
 $D{c} =~ s!/+$!!;
-length $D{c}
-	or die $cs->tagmsg(E => $cs->diag(__(
+length $D{c} or die $cs->tagmsg(E => $cs->diag(__(
 	"%q may not be empty."), 'c'));
 # We also create rules under `c', so it must be relative too.
 File::Spec->file_name_is_absolute($D{c})
