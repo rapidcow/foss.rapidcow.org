@@ -21,12 +21,34 @@
 	Packages are not built but I will tag the git releases
 	(and maybe a change log when I find convenient)</p>
 
-	<p>As of now, the latest version of WwW-SiteConf is 0.0300
-	(tagged <code><u>siteconf</u>/v0.03_00</code> (<b>we renamed</b>!)),
-	the latest version of WwW-GenLib is 0.0300
-	(tagged <code>genlib/v0.03_00</code>),
-	and the latest version of WwW-GenGenLib is 0.0100
-	(tagged <code>gengenlib/v0.01_00</code>).</p>
+	<p>As of now, the latest versions of&hellip;</p>
+	<ul>
+[% SET dist_ivec = [
+	[ "I18N-CodeSets", "codesets", "0.00_00", "new!" ],
+	[ "L10N-TextDomain", "textdomain", "0.00_00", "new!" ],
+	[ "WwW-GenGenLib-Template-Provider", "template-provider", "0.00_00", "new-ish" ], # old but new
+	[ "WwW-GenGenLib", "gengenlib", "0.01_00" ],
+	[ "WwW-GenLib", "genlib", "0.03_00" ],
+	[ "WwW-SiteConf", "siteconf", "0.03_00" ],
+	[ "WwW-SiteConf-L10N", "siteconf-l10n", "0.00_00", "new!" ],  # new!
+] -%]
+[% FOREACH dist_info IN dist_ivec -%]
+[% 	SET dist_name = dist_info.0 -%]
+[% 	SET dist_ntag = dist_info.1 -%]
+[% 	SET dist_vstr = dist_info.2 -%]
+[% 	SET dist_vnam = dist_vstr.remove('_') -%]
+[% 	SET dist_news = dist_info.3 -%]
+[% 	IF dist_name == "WwW-SiteConf" -%]
+		<li>siteconf ([% dist_name | html %]) is [% dist_vnam | html %]
+		(tagged <code><u>[% dist_ntag | html %]</u>/[% dist_vstr | html %]</code>
+		(<b>we renamed</b>!)),</li>
+[% 	ELSE -%]
+		<li>[% dist_name | html %] is [% dist_vnam | html %]
+		(tagged <code>[% dist_ntag | html %]/[% dist_vstr | html %]</code>
+[%- 	IF dist_news -%] (<b>[% dist_news | html %]</b>)[% END %])</li>
+[% 	END -%]
+[% END -%]
+	</ul>
 
 	<p>As of siteconf 0.03, the minimum Perl version has
 	been increased to 5.008, and non-UTF-8 locales are supported.
