@@ -45,7 +45,7 @@
 [% 	ELSE -%]
 		<li>[% dist_name | html %] is [% dist_vnam | html %]
 		(tagged <code>[% dist_ntag | html %]/[% dist_vstr | html %]</code>
-[%- 	IF dist_news -%] (<b>[% dist_news | html %]</b>)[% END %])</li>
+[%- 	IF dist_news %] (<b>[% dist_news | html %]</b>)[% END %])</li>
 [% 	END -%]
 [% END -%]
 	</ul>
