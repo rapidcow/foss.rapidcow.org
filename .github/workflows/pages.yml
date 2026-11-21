@@ -49,11 +49,11 @@ jobs:
             libfile-sharedir-perl libfile-sharedir-install-perl \
             libencode-locale-perl
 
-      # The distro's libtemplate-perl is older than the 3.102 we need,
+      # The distro's libtemplate-perl is older than the 3.103 we need,
       # so install Template Toolkit explicitly from CPAN.
-      - name: Install Template Toolkit 3.102 from CPAN
+      - name: Install Template Toolkit 3.103 from CPAN
         run: |
-          sudo cpanm --notest Template::Toolkit~3.102
+          sudo cpanm --notest Template::Toolkit~3.103
 
       - name: Install siteconf
         run: |
