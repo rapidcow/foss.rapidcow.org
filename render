@@ -213,7 +213,7 @@ sub rewrite
 }
 
 # Version the built bytes of a declared resource (NEED it in the header):
-# get_version('${B}/${b}/x.css'), or as written out.
+# get_version("${D.B}/${D.b}/x.css"), or as written out.
 #
 # Peers are OK
 sub get_version
