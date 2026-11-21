@@ -16,8 +16,9 @@ shift $(( OPTIND - 1 ))
 
 init ()
 {
-	# html filter as it was in Template 3.102; 3.103 started turning
-	# ' into &#39; (cpan-authors/Template2#337), which we rely on.
+	# Template 3.103 started turning ' into &#39;
+	# (cpan-authors/Template2#337), which we are
+	# pinning here.
 	siteconf -i -Sa=. -Sb=docs -Obase_url=/ -Osite_url=https://foss.rapidcow.org -P web \
 		-MRdKw::WwW::GenGenLib::Template::Provider -MTemplate=3.103 "$@"
 }

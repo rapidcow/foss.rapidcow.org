@@ -1,7 +1,7 @@
 --- a/render
 +++ b/render
-@@ -46,6 +46,8 @@
- use RdKw::WwW::GenLib 0.0300 qw( locate file2uri uri2file );
+@@ -47,6 +47,8 @@
+ 	locate file2uri uri2file );
  use Template;
  use RdKw::WwW::GenGenLib::Template::Provider;
 +use Digest::SHA;
@@ -9,7 +9,7 @@
  
  my $cs = RdKw::I18N::CodeSets->locale;
  # Command-line arguments are decoded via the
-@@ -121,11 +123,16 @@
+@@ -122,11 +124,16 @@
  my %v = (
  	D => $D,
  	O => $O,
@@ -27,7 +27,7 @@
  );
  
  #
-@@ -167,6 +174,7 @@
+@@ -168,6 +175,7 @@
  	DEFINITION => $D,
  	ENCODING => 'UTF-8',
  	INCLUDE_PATH => [ '.', $D->{a} ],
@@ -35,7 +35,7 @@
  })
  	or die "[TT] ", RdKw::WwW::GenGenLib::Template::Provider->error(), "\n";
  my $tt = Template->new({
-@@ -179,3 +187,54 @@
+@@ -180,3 +188,54 @@
  	or die "[TT] ", $tt->error(), "\n";
  
  exit 0;  # goodbye!
