@@ -1,0 +1,19 @@
+stat as follows:
+
+$ stat *.pl
+  File: doit.pl
+  Size: 106       	Blocks: 8          IO Block: 4096   regular file
+Device: 0,39	Inode: 51373827    Links: 1
+Access: (0644/-rw-r--r--)  Uid: (  984/rapidcow)   Gid: (  984/   users)
+Access: 2026-11-20 20:22:48.833816592 -0600
+Modify: 2026-11-11 01:24:16.324042624 -0600
+Change: 2026-11-11 01:24:16.326042633 -0600
+ Birth: 2026-11-11 01:21:54.470453219 -0600
+  File: touch.pl
+  Size: 132       	Blocks: 8          IO Block: 4096   regular file
+Device: 0,39	Inode: 51374047    Links: 1
+Access: (0644/-rw-r--r--)  Uid: (  984/rapidcow)   Gid: (  984/   users)
+Access: 2026-11-20 20:22:47.042808997 -0600
+Modify: 2026-11-11 01:30:40.454717924 -0600
+Change: 2026-11-11 01:30:40.455891343 -0600
+ Birth: 2026-11-11 01:26:07.282526684 -0600
