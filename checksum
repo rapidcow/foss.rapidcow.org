@@ -7,7 +7,7 @@
 #
 # The first line of archive/sha256sum.txt is the SHA-256 of a tarball
 # (which is never kept: it goes straight into the hash) of the files
-# listed by MY/MANIFEST.docs, in that order, as docs/..., with
+# listed by MY/MANIFEST, in that order, as docs/..., with
 # everything that depends on who built it and when taken out: root:0
 # and wheel:0 own it all, at the epoch.  File modes are kept, so the
 # umask had better be 022.
@@ -18,7 +18,7 @@
 #
 # Nothing is built here: run make (or whatever) yourself first.
 #
-manifest=MY/MANIFEST.docs
+manifest=MY/MANIFEST
 goal=docs
 dir=docs
 tarball=docs.gnu.tar
